@@ -1,0 +1,37 @@
+//flexboxes
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.containerSpace {
+  justify-content: space-between;
+}
+
+.containerStretch {
+  align-items: stretch;
+}
+
+.containerLeft { //ToolsBar.js
+  align-content: left;
+  justify-content: left;
+}
+
+.containerRight { //ToolsBar.js
+  align-content: right;
+  justify-content: right;
+}
+
+.flexCenter {
+  align-self: center;
+}
+
+.flexRow {
+  flex-direction: row;
+}
+
+.flexGrow2{
+  flex-grow: 2;
+}

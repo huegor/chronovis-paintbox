@@ -1,0 +1,26 @@
+/* foundational variables on which site styles will be built */
+
+/*
+DEPRECATION WARNIN: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+remote:
+remote: Recommendation: math.div($padding, 4) or calc($padding / 4)
+*/
+$color: #000;
+$altColor: #888;
+$bgColor: #eee;
+$altBgColor: #DEDEDE;
+$accentColorLight: #f2f2ff;
+$accentColorDark: #6761D1;
+$uiColor: rgba(255, 255, 255, 0.95);
+
+$fontStack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+$fontStackSerif: "Lucida Bright", 'Georgia', serif;
+$fontSize: 1em;
+$fontSizeSmall: $fontSize*.9;
+$fontSizeBig: $fontSize*1.3;
+
+$padding: 5%;
+$paddingHalf: calc($padding/2);
+$vPadding: 1.5vh;

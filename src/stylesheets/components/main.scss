@@ -1,0 +1,13 @@
+body {
+  background: $bgColor;
+  margin: 0;
+  font-family: $fontStack;
+  font-size: $fontSize;
+  line-height: $fontSize*1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#main {
+  padding: 0 $padding;
+}

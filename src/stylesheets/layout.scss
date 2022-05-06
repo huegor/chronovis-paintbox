@@ -1,0 +1,58 @@
+/* structures the display of elements on page */
+
+/*see index.js*/
+#root {
+  position: relative;
+}
+
+.displayNone {
+  display: none;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.rightPos {
+  right:0;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+
+.fullWidth {
+  width: 100%;
+}
+.halfWidth {
+  width: 50%;
+}
+.thirdWidth {
+  width: 33.3%;
+}
+
+.fullHeight {
+  height: 100vh;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+// .noPadding {
+//   padding: $vPadding 0;
+// }
+
+.vPadding {
+  padding: $vPadding 0;
+}
+
+.smallPadding {
+  padding: 0 calc($padding/4);
+}

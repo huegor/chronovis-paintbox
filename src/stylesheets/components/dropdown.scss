@@ -1,0 +1,28 @@
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown-content {
+  position: absolute;
+  z-index: 2;
+  background-color: $uiColor;
+  font-size: $fontSizeSmall;
+}
+
+.dropdown-content .subheading {
+  color:$altColor;
+  padding-left: $vPadding;
+  // padding-top: $fontSizeSmall;
+  // border-top: 1px solid $altBgColor;
+}
+
+.dropdown-content button{
+  width: 100%;
+  padding: $vPadding $vPadding*1.5;
+}
+
+
+// .dropdown-content .right {
+//   position: absolute;
+//   right: 0;
+// }

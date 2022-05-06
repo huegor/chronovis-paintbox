@@ -1,0 +1,60 @@
+button, input[type=button], input[type=submit] {
+  font-size: $fontSizeSmall;
+  background-color: transparent;
+  border-color: $altColor;
+  border-style: solid;
+}
+
+button:hover, input[type=button]:hover, input[type=submit]:hover {
+  border-color: $accentColorDark;
+}
+
+button.disabled {
+  opacity: 50%;
+}
+
+button.disabled:hover {
+  background: none;
+}
+
+.buttonPrimary {
+  border-radius: $fontSize;
+  padding: $vPadding*1.2;
+}
+
+.buttonSecondary {
+  color: $altColor;
+  padding: $vPadding*.6 $fontSize;
+  border-radius: $vPadding;
+}
+
+.buttonSymbol {
+  color: $altColor;
+  padding: $vPadding/4 $vPadding/2;
+}
+
+.buttonSecondary:hover, .buttonSymbol:hover {
+  color: $accentColorDark;
+}
+
+// .uiButton {
+//   padding: $vPadding*1.2;
+// }
+
+.closeButton {
+  color: $altColor;
+  padding: calc($vPadding/4) calc($vPadding/2);
+}
+
+.closeButton:hover {
+  color: $accentColorDark;
+}
+
+.editButton {
+  border: none;
+}
+
+.editIcon {
+  height:$fontSize;
+  fill: $altColor;
+}

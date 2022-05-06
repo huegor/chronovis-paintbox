@@ -1,0 +1,77 @@
+<head>
+  <!-- Include Handsfree.js -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.5.1/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.5.1/build/lib/handsfree.js"></script>
+</head>
+
+<body>
+  <!-- Start button -->
+  <p class="text-center">
+    <button class="handsfree-show-when-stopped handsfree-hide-when-loading" onclick="handsfree.start()">Start Hand Tracking</button>
+    <button class="handsfree-show-when-loading" disabled>Loading ...</button>
+    <button class="handsfree-show-when-started handsfree-hide-when-loading" onclick="handsfree.stop()">Stop Handsfree</button>
+  </p>
+  
+
+
+  <!-- VIDEO -->
+  <div class="columns">
+    <div>
+      <video crossOrigin="anonymous" id="demo-video" style="width: 100%; height: auto" controls muted autoplay loop>
+        <source src="https://media.giphy.com/media/fuqOHTeelZdChAkx2s/giphy.mp4"></source>
+      </video>
+    </div>
+    <div id="debugger-holder"></div>
+  </div>
+
+
+
+  <!-- CODE -->
+  <script>
+    const handsfree = new Handsfree({
+      showDebug: true,
+      hands: {
+        enabled: true,
+        maxNumHands: 2
+      },
+
+      setup: {
+        // use a video instead of webcam
+        video: {
+          $el: document.querySelector('#demo-video')
+        },
+
+        // Show the debugger next to the video
+        wrap: {
+          $parent: document.querySelector('#debugger-holder')
+        }
+      }
+    })
+  </script>
+
+
+
+  <!-- STYLES -->
+  <style>
+    .handsfree-canvas-video {
+      background: #000;
+      opacity: 0.1;
+    }
+
+    button {
+      font-size: 1em;
+      padding: .5em;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+
+    .columns {
+      display: flex;
+    }
+    .columns > div {
+      flex: 50%;
+    }
+  </style>
+</body>

@@ -1,0 +1,20 @@
+{
+  "imgs":[],
+  "nodes":[
+    [
+      {"id":0,"name":"New Hampshire","x":1624,"y":0,"color":"DarkSeaGreen","target":1,"lineColor":"DarkSeaGreen"},
+      {"id":1,"name":" ","x":1680,"y":0,"color":"LightBlue","target":2,"lineColor":"LightBlue"},
+      {"id":2,"name":"Colonies consolidated","x":1685,"y":0,"target":3},
+      {"id":3,"name":" ","x":1687,"y":0,"target":4},
+      {"id":4,"name":" ","x":1689,"y":0,"target":5, "color":"DarkSeaGreen", "lineColor":"DarkSeaGreen"},
+      {"id":5,"name":" ","x":1691,"y":0,"color":"LightBlue","target":6},
+      {"id":6,"name":"Independence","x":1774,"y":0,"target":7,"color":"DarkSeaGreen","lineColor":"DarkSeaGreen"},
+      {"id":7,"name":" Revolutionary War","x":1776,"y":0,"color":"DarkSeaGreen","target":8},
+      {"id":8,"name":"Treaty of Peace","x":1782.2,"y":0,"color":"DarkSeaGreen","target":9},
+      {"id":9,"name":"advisory government","x":1783.7,"y":0,"color":"DarkSeaGreen","target":10},
+      {"id":10,"name":"National Constitution","x":1787.3,"y":0,"color":"DarkSeaGreen","target":11},
+      {"id":11,"name":" ","x":1789.7,"y":0,"color":"DarkSeaGreen","target":null}
+    ]
+  ],
+  "intervals":[]
+}

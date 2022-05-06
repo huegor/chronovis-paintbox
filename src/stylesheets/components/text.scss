@@ -1,0 +1,41 @@
+text {
+  font-family: $fontStack;
+  font-size: $fontSizeBig;
+}
+
+a {
+  color: $accentColorDark;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+h1 {
+  font-family: $fontStackSerif;
+  font-size: $fontSize*2;
+  line-height: $fontSizeBig;
+}
+
+.smallTxt {
+  font-size: $fontSizeSmall;
+  letter-spacing: $fontSizeSmall*.02;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.textSecondary {
+  color: $altColor;
+}
+
+//for "required" fields
+.redText {
+  color: red;
+}

@@ -1,0 +1,438 @@
+{
+    "imgs": [],
+    "instants": [
+        {
+            "environmental_changes_acceleration": {
+                "x": 1950,
+                "y": 60,
+                "scale": "calendarDate",
+                "target": [
+                    "slower_environmental_changes"
+                ],
+                "text": "Environmental changes dramatically accelerated "
+            },
+            "anthropocene_epoch": {
+                "x": 1950,
+                "y": 68.84444444444445,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Proposed starting date of the Anthropocene Epoch"
+            },
+            "slower_environmental_changes": {
+                "x": 1960,
+                "y": 77.6888888888889,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Earlier slow-progressing changes caused solely by natural factors"
+            },
+            "lake_and_river_acidification": {
+                "x": 1980,
+                "y": 86.53333333333333,
+                "scale": "calendarDate",
+                "target": [
+                    "ion_water_concentration"
+                ],
+                "text": "Acidification of poorly buffered lakes and rivers "
+            },
+            "ph_precipitation_value_drop": {
+                "x": 1980,
+                "y": 95.37777777777778,
+                "scale": "calendarDate",
+                "target": [
+                    "environmental_changes_acceleration"
+                ],
+                "text": "Drop in the pH value of precipitation "
+            },
+            "serious_environmental_problems": {
+                "x": 1980,
+                "y": 104.22222222222221,
+                "scale": "calendarDate",
+                "target": [
+                    "forest_decline"
+                ],
+                "text": "Serious environmental problems"
+            },
+            "fish_kills": {
+                "x": 1980,
+                "y": 113.06666666666666,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Fish kills "
+            },
+            "forest_decline": {
+                "x": 1980,
+                "y": 121.9111111111111,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Forest decline."
+            },
+            "ocean_ph_value": {
+                "x": 2022,
+                "y": 130.75555555555556,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Current pH value of surface ocean water (8.1) is probably the lowest "
+            },
+            "iron_mountain_mine_remediation": {
+                "x": 1986,
+                "y": 139.60000000000002,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Remediation of the abandoned Iron Mountain Mine (California, USA)"
+            },
+            "ion_water_concentration": {
+                "x": 1986,
+                "y": 148.44444444444443,
+                "scale": "calendarDate",
+                "target": [
+                    "iron_mountain_mine_remediation"
+                ],
+                "text": "Water concentrations of Zn, Cu, and Cd ions at Iron Mountain Mine were several grams per liter"
+            },
+            "mine_wastewater_discharge": {
+                "x": 1986,
+                "y": 157.2888888888889,
+                "scale": "calendarDate",
+                "target": [
+                    "lake_and_river_acidification"
+                ],
+                "text": "Iron Mountain Mine’s wastewater was discharged into the Sacramento River"
+            },
+            "industrial_nitrogen_and_phosphorus": {
+                "x": 1900,
+                "y": 166.13333333333333,
+                "scale": "calendarDate",
+                "target": [
+                    "environmental_changes_acceleration"
+                ],
+                "text": "Increased industrial nitrogen and phosphorus inputs "
+            },
+            "eutrophication": {
+                "x": 1900,
+                "y": 174.97777777777776,
+                "scale": "calendarDate",
+                "target": [
+                    "eutrophication_species_disappearance"
+                ],
+                "text": "Eutrophication (an excess accumulation of nutrients) in aquatic environments"
+            },
+            "eutrophication_coral_loss": {
+                "x": 2022,
+                "y": 183.82222222222222,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Loss of up to 60 percent of coral biodiversity by eutrophication in parts of Indonesia"
+            },
+            "eutrophication_species_disappearance": {
+                "x": 2022,
+                "y": 192.66666666666666,
+                "scale": "calendarDate",
+                "target": [
+                    "mississippi_dead_zone"
+                ],
+                "text": "Vascular plant species have disappeared in Australia and North America"
+            },
+            "mississippi_dead_zone": {
+                "x": 2022,
+                "y": 201.51111111111112,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Examples of a hypoxic “dead zone” is found west of the Mississippi delta"
+            },
+            "anthropogenic_metal_pollution": {
+                "x": -10000,
+                "y": 210.35555555555555,
+                "scale": "early",
+                "target": [
+                    null
+                ],
+                "text": "Anthropogenic pollution with metals "
+            },
+            "mining_and_smelting": {
+                "x": -10000,
+                "y": 219.20000000000002,
+                "scale": "early",
+                "target": [
+                    "metal_pollution_acceleration"
+                ],
+                "text": "Development of metal ore mining and smelting"
+            },
+            "metal_pollution_acceleration": {
+                "x": 1950,
+                "y": 228.04444444444442,
+                "scale": "calendarDate",
+                "target": [
+                    "environmental_changes_acceleration"
+                ],
+                "text": "Global-scale metal pollution accelerated "
+            },
+            "metal_consumption": {
+                "x": 1900,
+                "y": 245.73333333333335,
+                "scale": "calendarDate",
+                "target": [
+                    "ion_water_concentration"
+                ],
+                "text": "Cu, Pb, and Zn show that about 90 percent of each of these metals was used "
+            },
+            "metal_fluxes_increase": {
+                "x": 1945,
+                "y": 254.57777777777775,
+                "scale": "calendarDate",
+                "target": [
+                    "metal_consumption"
+                ],
+                "text": "Fluxes of copper, lead and zinc increased dramatically "
+            },
+            "metal_fluxes_decline": {
+                "x": 1980,
+                "y": 263.4222222222222,
+                "scale": "calendarDate",
+                "target": [
+                    "metal_consumption"
+                ],
+                "text": "Fluxes of copper, lead and zinc started to decline in industrialized countries"
+            },
+            "lead_emissions_peak": {
+                "x": 1970,
+                "y": 272.26666666666665,
+                "scale": "calendarDate",
+                "target": [
+                    "lead_emissions_decrease"
+                ],
+                "text": "Lead emissions reached a peak "
+            },
+            "lead_emissions_decrease": {
+                "x": 1980,
+                "y": 281.11111111111114,
+                "scale": "calendarDate",
+                "target": [
+                    "metal_fluxes_decline"
+                ],
+                "text": "Lead emissions decreased due to a variety of measures"
+            },
+            "air_pollution_control_measures": {
+                "x": 1980,
+                "y": 289.9555555555555,
+                "scale": "calendarDate",
+                "target": [
+                    "lead_emissions_decrease"
+                ],
+                "text": "Implementation of air pollution control technologies"
+            },
+            "gasoline_lead_concentration_reduction": {
+                "x": 1980,
+                "y": 298.8,
+                "scale": "calendarDate",
+                "target": [
+                    "lead_emissions_decrease"
+                ],
+                "text": "Reductions in the maximum allowable concentrations of lead in gasoline "
+            },
+            "unleaded_gasoline": {
+                "x": 1980,
+                "y": 307.64444444444445,
+                "scale": "calendarDate",
+                "target": [
+                    "lead_emissions_decrease"
+                ],
+                "text": "Introduction of unleaded gasoline"
+            },
+            "leaded_gasoline_elimination": {
+                "x": 1980,
+                "y": 316.4888888888889,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "The phase-out and elimination of leaded gasoline "
+            },
+            "organic_contaminants": {
+                "x": 1960,
+                "y": 325.3333333333333,
+                "scale": "calendarDate",
+                "target": [
+                    "pesticide_ban"
+                ],
+                "text": "Organic contaminants began to cause a major concern "
+            },
+            "evident_effect_of_pesticides": {
+                "x": 1960,
+                "y": 334.1777777777778,
+                "scale": "calendarDate",
+                "target": [
+                    "environmental_changes_acceleration"
+                ],
+                "text": "Adverse effect of organochlorine pesticides became evident"
+            },
+            "pesticide_ban": {
+                "x": 1975,
+                "y": 343.02222222222224,
+                "scale": "calendarDate",
+                "target": [
+                    "pcb_decrease"
+                ],
+                "text": "Many countries banned the use of organochlorine pesticides"
+            },
+            "pcb_us_ban": {
+                "x": 1977,
+                "y": 351.8666666666666,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Use and production of PCBs was banned in the US "
+            },
+            "pcb_europe_ban": {
+                "x": 1980,
+                "y": 360.7111111111111,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Use and production of PCBs was banned in Europe"
+            },
+            "pbde_production": {
+                "x": 1970,
+                "y": 369.55555555555554,
+                "scale": "calendarDate",
+                "target": [
+                    "pbde_uses"
+                ],
+                "text": "PBDEs production"
+            },
+            "pbde_europe_ban": {
+                "x": 2000,
+                "y": 378.40000000000003,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "PBDEs banned in Europe"
+            },
+            "pbde_uses": {
+                "x": 1970,
+                "y": 387.24444444444447,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "PBDEs were utilized as flame retardants, fumigants, and antifungals"
+            },
+            "pah_peak_europe_and_us": {
+                "x": 1950,
+                "y": 396.08888888888885,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Peak of PAH concentrations in sediment layers in Europe and the US"
+            },
+            "pah_peak_south_america": {
+                "x": 1970,
+                "y": 404.93333333333334,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Peak of PAH concentrations in sediment layers in South America"
+            },
+            "pah_peak_china": {
+                "x": 1980,
+                "y": 413.77777777777777,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Peak of PAH concentrations in sediment layers in China"
+            },
+            "pah_peak_japan": {
+                "x": 1940,
+                "y": 422.6222222222222,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Peak of PAH concentrations in sediment layers in Japan"
+            },
+            "dioxins_trends_increasing": {
+                "x": 1940,
+                "y": 431.4666666666667,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Dioxins in sediment cores from Europe and the US show increasing trends "
+            },
+            "dioxins_peak_concentrations": {
+                "x": 1960,
+                "y": 440.31111111111113,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Dioxins in sediment cores from Europe and the US show peak concentrations"
+            },
+            "pcb_decrease": {
+                "x": 1977,
+                "y": 449.1555555555555,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Levels of PCBs in the environment decreased "
+            },
+            "pollutants_persistent_effects": {
+                "x": 2022,
+                "y": 458,
+                "scale": "calendarDate",
+                "target": [
+                    null
+                ],
+                "text": "Pollutants still appear to adversely affect biota"
+            }
+        }
+    ],
+    "zones": [],
+    "scales": {
+        "early": {
+            "min": -10010,
+            "max": -9000,
+            "units": "Years",
+            "yPos": 1,
+            "hideLabels": true,
+            "segments": [
+                {
+                    "max": -10000
+                }
+            ]
+        },
+        "calendarDate": {
+            "min": 1810,
+            "max": 2022,
+            "units": "Years",
+            "yPos": 1,
+            "segments": [
+                {
+                    "min": 1900
+                }
+            ]
+        }
+    }
+}

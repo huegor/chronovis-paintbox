@@ -1,0 +1,12 @@
+{
+  "imgs":[],
+  "nodes":
+  [
+    [
+      {"id":0,"name":"Lorem","x":"before","y":0,"color":"DarkSeaGreen","target":[1],"lineColor":"DarkSeaGreen"},
+      {"id":1,"name":"Ipsum","x":"now","y":0,"color":"LightBlue","target":[2],"lineColor":"LightBlue"},
+      {"id":2,"name":"Dolor","x":"after","y":0,"target":[3]}
+    ]
+  ],
+  "intervals":[]
+}

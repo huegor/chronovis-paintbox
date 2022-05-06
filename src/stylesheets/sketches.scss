@@ -1,0 +1,45 @@
+//for experimental layouts and testing
+
+.redBg {
+  background-color: red;
+}
+
+.debugging {
+  //display: none;
+  color: blue;
+  position:absolute;
+  top: 1vh;
+  right: 20%;
+  z-index: 5;
+}
+
+.handsfree-debugger{
+  display: none;
+  // position:absolute;
+  // top: 3vh;
+  // right: 0;
+  // max-height: 100vh;
+}
+
+//from handsfree site
+.handsfree-pointer {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background: $accentColorDark;
+  border: 3px solid $accentColorDark;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  opacity: 1;
+  transition: opacity .35s ease;
+  display: none;
+}
+
+.handsfree-video{
+  position:absolute;
+  bottom: 1vh;
+  right: 0;
+  max-height: 20vh;
+}

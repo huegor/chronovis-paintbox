@@ -1,0 +1,28 @@
+  /* individual components that make up page.
+break up into scss partials */
+@import "flexboxes.scss";
+@import "nav.scss";
+@import "img.scss";
+@import "graphic.scss";
+@import "nav.scss";
+@import "text.scss";
+@import "ui.scss";
+@import "lists.scss";
+@import "dropdown.scss";
+@import "buttons.scss";
+@import "main.scss";
+@import "inputField.scss";
+@import "welcomeScreen.scss";
+
+
+.svgWrapper {
+  margin-bottom: $fontSize*2;
+}
+
+.halfOpacity {
+  opacity: 0.5;
+}
+
+.pointer {
+  cursor: pointer;
+}

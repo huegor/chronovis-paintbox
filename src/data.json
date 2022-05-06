@@ -1,0 +1,240 @@
+{
+  "imgs": ["der-strom.jpg"],
+  "instants":
+  [
+    {
+      "0": {
+        "text": "Lorem",
+        "x":1620,
+        "y":15,
+        "target": ["1"],
+        "color":"#4DA6FF",
+        "opacity": 0.5,
+        "radius": 8,
+        "intervalText": "evolution of terrestrial vegetation",
+        "intervalColor":"red",
+        "intervalWidth": 5,
+        "intervalOpacity": 0.8,
+        "intervalDashed": "5 2",
+        "layer": 1,
+        "scale": ["smalls", "woo"]
+      },
+      "1": {
+        "text": "Ipsum",
+        "x":1623,
+        "y":15,
+        "target": ["2"],
+        "layer": 1,
+        "cancelled": true,
+        "scale": ["smalls", "woo"]
+
+      },
+      "2": {
+        "text": "Dolor",
+        "x":1624,
+        "y":32,
+        "target": ["3"],
+        "color":"red",
+        "layer": 0,
+        "scale": ["smalls", "woo"]
+      },
+      "3": {
+        "text": "Sit",
+        "x":1628,
+        "y":15,
+        "target": ["4", "5"],
+        "layer": 0,
+        "scale": ["smalls", "woo"],
+        "connections": [6, 0]
+      },
+      "4": {
+        "text": "Amet",
+        "x":"noEnd",
+        "y":8,
+        "target": null,
+        "layer": 0,
+        "scale": ["smalls", "woo"]
+      },
+      "5": {
+        "text": "Consectetur",
+        "x":1634,
+        "y":20,
+        "target": null,
+        "layer": 0,
+        "foreshadowing": true,
+        "scale": ["smalls", "woo"]
+      },
+      "6": {
+        "text": "Foo",
+        "x":600,
+        "y":8,
+        "target": ["8"],
+        "color":"#4DA6FF",
+        "intervalColor":"#4DA6FF",
+        "layer": 0,
+        "scale": ["biggie", "woo"],
+        "connections": [3, 1]
+      },
+      "8": {
+        "text": "Bar",
+        "x":1300,
+        "y":30,
+        "target": null,
+        "layer": 0,
+        "scale": ["biggie", "woo"]
+      },
+      "9": {
+        "text": "告",
+        "x":100,
+        "y":25,
+        "target": null,
+        "layer": 0,
+        "scale": ["biggie", "woo"]
+      }
+    },
+    {
+      "0": {
+        "text": "Lorem",
+        "x":1620,
+        "y":15,
+        "target": ["1"],
+        "color":"#4DA6FF",
+        "opacity": 0.5,
+        "radius": 8,
+        "intervalColor":"red",
+        "intervalWidth": 5,
+        "intervalOpacity": 0.8,
+        "intervalDashed": "5 2",
+        "layer": 1,
+        "scale": ["smalls", "woo"]
+      },
+      "1": {
+        "text": "Ipsum",
+        "x":1623,
+        "y":15,
+        "target": ["2"],
+        "layer": 1,
+        "cancelled": true,
+        "scale": ["smalls", "woo"]
+
+      },
+      "2": {
+        "text": "Dolor",
+        "x":1624,
+        "y":32,
+        "target": ["3"],
+        "color":"red",
+        "layer": 0,
+        "scale": ["smalls", "woo"]
+      },
+      "3": {
+
+        "text": "Sit",
+        "x":1630,
+        "y":16,
+        "target": ["4", "5"],
+        "layer": 0,
+        "scale": ["smalls", "woo"],
+        "connections": [6, 0]
+      },
+      "4": {
+        "text": "Amet",
+        "x":1637,
+        "y":8,
+        "target": null,
+        "layer": 0,
+        "scale": ["smalls", "woo"]
+      },
+      "5": {
+        "text": "Consectetur",
+        "x":1634,
+        "y":20,
+        "target": null,
+        "layer": 0,
+        "foreshadowing": true,
+        "scale": ["smalls", "woo"]
+      },
+      "6": {
+        "text": "Foo",
+        "x":600,
+        "y":8,
+        "target": ["8"],
+        "color":"#4DA6FF",
+        "intervalColor":"#4DA6FF",
+        "layer": 0,
+        "scale": ["biggie", "woo"],
+        "connections": [3, 1]
+      },
+      "8": {
+        "text": "Bar",
+        "x":1300,
+        "y":30,
+        "target": null,
+        "layer": 0,
+        "scale": ["biggie", "woo"]
+      },
+      "9": {
+        "text": "告",
+        "x":100,
+        "y":25,
+        "target": null,
+        "layer": 0,
+        "scale": ["biggie", "woo"]
+      }
+    }
+  ],
+  "zones": {
+    "0": {
+      "text": "zone1",
+      "start":1621,
+      "end":1625,
+      "scale": ["smalls", "woo"]
+    },
+    "1": {
+      "text": "zone2",
+      "start":1623,
+      "end":1630,
+      "yStart": 10,
+      "yEnd":30,
+      "color": "green",
+      "opacity": 0.25,
+      "scale": ["smalls", "woo"],
+      "importance": 2
+    }
+  },
+  "scales": {
+    "x": {
+      "biggie": {
+        "min": -100,
+        "max": 1637,
+        "units": "Unicorns per 100K",
+        "yPos": 1,
+        "tickValues": [],
+        "hideUnits": false,
+        "segments": [
+          {"max": 120},
+          {"min": 120, "max": 1000},
+          {"min": 1000}
+        ]
+      },
+      "smalls": {
+        "min": 1620,
+        "max": 1637,
+        "units": "Years AD",
+        "yPos": 0.5,
+        "tickValues": [],
+        "segments": [
+          {"max": 1623},
+          {"min": 1630}
+        ]
+      }
+    },
+    "y": {
+      "Place in Text": {
+        "min": 5,
+        "max": 35,
+        "units": "paragraph"
+      }
+    }
+  }
+}
