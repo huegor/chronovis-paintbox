@@ -23,6 +23,8 @@ import Connection from "./components/Connection";
 import WelcomeMessage from "./components/WelcomeMessage";
 import generateIntervals from "./components/generateIntervals";
 import EmptyProj from "./components/EmptyProj";
+//for installation
+// import Hands from './components/Hands';
 
 
 function translateData({data, nullData}) {
@@ -160,7 +162,7 @@ function App() {
   const [fileName, setFileName] = useState("");
 
   //for the entire ChronoJSON
-  const [src, setSrc] = useState(scaleData);
+  const [src, setSrc] = useState(NullData);
   // console.log(translateData({data:TagVisData,nullData:nullData}))
   //for ChronoJSON history. for undo and redo
   const [history, setHistory] = useState([]) //make fixed length array
@@ -243,8 +245,10 @@ function App() {
     TODO:
     - for piecewise timeline, make function that generates different graphics
   */
+//
   return (
     <>
+
       {info && <InfoBox
         info={info}
         setInfo={setInfo}
