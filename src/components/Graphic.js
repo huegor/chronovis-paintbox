@@ -40,7 +40,7 @@ function Graphic({
   //hash map of y scales
   const yScales = {};
 
-  //init scales
+  //init scales. turn into useRef eventually
   useEffect(() => {
     if (!dimensions) return;
     const yTicks = [];
@@ -60,7 +60,7 @@ function Graphic({
         ticks: [...new Set(yTicks)]
       }
     });
-  }, [dimensions, scales, currentZoomState]);
+  }, [dimensions, scales, currentZoomState, data]);
 
   //initialize intervals between instants
   const intervals = generateIntervals(data); //TODO: write updateIntervals function
@@ -82,6 +82,26 @@ function Graphic({
     svg
       .selectAll(".remove")
       .remove();
+    //removes
+    if (!activeData.length) {
+      svg
+        .selectAll(".instant")
+        .remove();
+      svg
+        .selectAll(".interval")
+        .remove();
+      svg
+        .selectAll(".label")
+        .remove();
+      svg
+        .selectAll(".intervalLabel")
+        .remove();
+
+    } else if (!activeZones.length) {
+      svg
+        .selectAll(".zones")
+        .remove();
+    }
 
     //rounding for data inputted thru paintbox interface
     function round(value, range) {
@@ -169,11 +189,11 @@ function Graphic({
           scale: scaleLinear() //scaleLinear takes domain (data values) & maps onto range (screen pixel values)
             .domain([thisScale.min, thisScale.max])
             .range([0, dimensions.width]),
-          noBeginning: thisScale.min-10,
-          noEnd: thisScale.max+10,
+          noBeginning: thisScale.min-0.1*(thisScale.max-thisScale.min),
+          noEnd: thisScale.max+0.1*(thisScale.max-thisScale.min),
           hasSegments: thisScale.segments.length?true:false,
           hideLabel: thisScale.hideLabel,
-          yPos: thisScale.yPos,
+          yPos: 1-thisScale.yPos,
           label: `${key} (${thisScale.units})`,
           tickValues: thisScale.tickValues?thisScale.tickValues:null,
           scaleInverse: scaleLinear() //for NewInstantForm
@@ -182,7 +202,6 @@ function Graphic({
         }
       ])
     );
-
 
     const xSegments = () => {
       const segments = [];
@@ -198,7 +217,7 @@ function Graphic({
           // console.log(xScales[i].scale(min));
           segments.push({
             scale: key,
-            yPos: thisScale.yPos,
+            yPos: 1-thisScale.yPos,
             proportion: (max-min)/(thisScale.max-thisScale.min),
             segment: scaleLinear()
             .domain([min, max])
@@ -250,17 +269,14 @@ function Graphic({
       // .range((rangeY>breakpoint) ? [-rangeY, rangeY] : [-breakpoint*5, breakpoint*5]);
 
 
+    console.log(scales, xScales, yScale)
 
-
-
-
-    //---draw zones---//
-    if (activeZones.length) {
+    if (Object.entries(zones).length) {
       svg
       .selectAll(".zones")
       .data(activeZones)
       .join("rect")
-      .attr("class", "zones")
+      .attr("class", "zones pointer")
       .attr("x", ([, v]) => xScales[v.scale[0]].scale(v.start))
       // .attr("x", n => generateScales(scales[n.scale]).x(n.start))
       .attr("y", ([, v]) => yScale(yMax))
@@ -284,7 +300,7 @@ function Graphic({
       .on("click", (e, target) => {
         if (toggle==="certainty" || toggle==="importance") { //pulls up inflection menu
           setInflectTarget(target);
-        } else { //displays zone properties when clicked
+        } else if (toggle!=="pan" || toggle!=="addInstant"){ //displays zone properties when clicked
           setInfo(null); //clear InfoBox
           setInfo({position: [e.x, e.y], target: target, type: "zone"});  //TODO: set info to null when clicking same zone again
         }
@@ -349,7 +365,7 @@ function Graphic({
             .attr("y", 10) //TODO: dynamic tick text spacing for accessibility
             .attr("opacity", 0.5));
       }
-      if (!thisScale.hideUnits) {
+      if (!thisScale.hideLabel) {
         svg
           .append("text")
           .text(thisScale.label)
@@ -360,7 +376,6 @@ function Graphic({
           .attr("opacity", 0.5);
         }
       }
-
     );
 
     //--draw vertical axis--//
@@ -417,19 +432,20 @@ function Graphic({
         console.log("end");
       });
 
-    if (Object.entries(data).length) {
+    if (activeData.length) {
       //---draw intervals---//
       const intervaler = linkHorizontal()
         .source(interval => interval.source[1])
         .target(interval => interval.target[1])
         // .x(n => generateScales(scales[n.scale]).x(logic ? logicScale(n.x) : n.x))
         .x(v => {
+            const thisScale = xScales[v.scale[0]]
             if (!isNaN(v.x)) {
-              return xScales[v.scale[0]].scale(v.x)
+              return thisScale.scale(v.x)
             } else if (v.x==="noEnd") {
-              return xScales[v.scale[0]].noEnd
+              return thisScale.scale(thisScale.noEnd)
             } else if (v.x==="noBeginning") {
-              return xScales[v.scale[0]].noBeginning
+              return thisScale.scale(thisScale.noBeginning)
             }
         })
         .y(v => yScale(v.y));
@@ -491,12 +507,17 @@ function Graphic({
         .attr("opacity", ([,v]) => v.opacity ? v.opacity : 1)
         // .attr("cx", d => generateScales(scales[d.scale]).x(logic ? logicScale(d.x) : d.x))
         .attr("cx", ([,v]) => {
+          const thisScale = xScales[v.scale[0]];
+          /*
+          noBeginning: thisScale.min-10,
+          noEnd: thisScale.max+10,
+          */
           if (!isNaN(v.x)) {
-            return xScales[v.scale[0]].scale(v.x)
+            return thisScale.scale(v.x)
           } else if (v.x==="noBeginning"){
-            return xScales[v.scale[0]].noBeginning
+            return thisScale.scale(thisScale.noBeginning)
           } else if (v.x==="noEnd") {
-            return xScales[v.scale[0]].noEnd
+            return thisScale.scale(thisScale.noEnd)
           }
         }) //scale x coordinate based on xScale defined in instant's scale property
         .attr("cy", ([,v]) => yScale(v.y))
@@ -709,6 +730,7 @@ function Graphic({
           } else {
             setInfo({position: [e.x, e.y], target: target}); //displays instant properties when clicked
           }
+          setToggle(null);
           e.stopPropagation();
         });
 */
@@ -743,18 +765,21 @@ function Graphic({
         .attr("x", v => {
           const source=v.source[1];
           const target=v.target[1];
+          const thisSourceScale = xScales[source.scale[0]];
+          const thisTargetScale = xScales[target.scale[0]];
           if (!isNaN(source.x) && !isNaN( target.x)) {
             //scale values, then average them
-            return (xScales[source.scale[0]].scale(source.x)+xScales[target.scale[0]].scale(target.x))/2
-          } else if (isNaN(source.x)) {
-            const s = source.x==="noBeginning"?xScales[source.scale[0]].noBeginning:xScales[source.scale[0]].noEnd
-            return (s+xScales[target.scale[0]].scale(target.x))/2
-          } else if (isNaN(target.x)) {
-            const s = target.x==="noBeginning"?xScales[target.scale[0]].noBeginning:xScales[target.scale[0]].noEnd
-            return (s+xScales[source.scale[0]].scale(source.x))/2
+            return (thisSourceScale.scale(source.x)+thisTargetScale.scale(target.x))/2
+          } else if (isNaN(source.x)) { //if source is no end/beginning
+            //noEnd or noBeginning?
+            const s = source.x==="noBeginning"?thisSourceScale.scale(thisSourceScale.noBeginning):thisSourceScale.scale(thisSourceScale.noEnd)
+            return (s+thisTargetScale.scale(target.x))/2
+          } else if (isNaN(target.x)) { //if target is no end/beginning
+            const s = target.x==="noBeginning"?thisTargetScale.scale(thisTargetScale.noBeginning):thisTargetScale.scale(thisTargetScale.noEnd)
+            return (s+thisSourceScale.scale(source.x))/2
           }
         })
-        .attr("y", v => yScale(Math.min(v.source[1].y, v.target[1].y)-0.05*rangeY)) //.6 below lowest y, otherwise 1/5 of breakpoint
+        .attr("y", v => yScale(Math.max(v.source[1].y, v.target[1].y)+0.05*rangeY)) //.05 above max y
         .attr("text-anchor", "middle");
 
     }
@@ -791,11 +816,11 @@ function Graphic({
         setInflectTarget({x: round(x, zoomRange), y: Math.round(y)});
         setToggle("NewInstantForm");
       }
-      setInfo(null);
+      setInfo(null)
     });
     svg.call(zoomBehavior);
 
-  }, [data, setData, zones, scales, toggle, activeLayer, activeData, dimensions, logic, currentZoomState, setInfo, radius, showLabel, syntacticOrder]);
+  }, [data, setData, zones, activeZones, scales, toggle, activeLayer, activeData, dimensions, logic, currentZoomState, setInfo, radius, showLabel, syntacticOrder]);
 
   return (
     <div ref={wrapperRef} className="svgWrapper">

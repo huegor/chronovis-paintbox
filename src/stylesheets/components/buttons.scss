@@ -9,14 +9,6 @@ button:hover, input[type=button]:hover, input[type=submit]:hover {
   border-color: $accentColorDark;
 }
 
-button.disabled {
-  opacity: 50%;
-}
-
-button.disabled:hover {
-  background: none;
-}
-
 .buttonPrimary {
   border-radius: $fontSize;
   padding: $vPadding*1.2;
@@ -37,9 +29,22 @@ button.disabled:hover {
   color: $accentColorDark;
 }
 
-// .uiButton {
-//   padding: $vPadding*1.2;
-// }
+nav button {
+  border: none;
+  // padding: $vPadding $vPadding*1.5;
+  z-index: 1;
+  background: none;
+  display: block;
+}
+
+nav button:hover {
+  background: $accentColorLight;
+}
+
+nav button:disabled {
+  background: none;
+  opacity: 0.5;
+}
 
 .closeButton {
   color: $altColor;

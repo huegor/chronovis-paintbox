@@ -52,21 +52,56 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
     });
   }
 
+  const handleSelectScale = (e, props) => {
+    e.preventDefault();
+    const newActiveScale = [...activeScale]
+    const { value, name } = e.target;
+    if (name==="xSelect") {
+      newActiveScale[0] = value
+    } else {
+      newActiveScale[1] = value
+    }
+
+    setActiveScale(newActiveScale)
+  }
+
   const handleSubmit = (e) => {
-    //setHistory
+    e.preventDefault();
     const newScales = {...scales};
+
+    const tempxMin = parseFloat(values.xMin);
+    const tempxMax = parseFloat(values.xMax);
+    const tempYPos = parseFloat(values.xYPos); //for x scale
+    const tempyMin = parseFloat(values.yMin);
+    const tempyMax = parseFloat(values.yMax);
+
+    //error handling
+    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempYPos) || isNaN(tempyMin) || isNaN(tempyMax)) {
+      alert("Make sure all numerical values are numbers!");
+      return;
+    } else if (tempxMin>=tempxMax) {
+      alert("Minimum x Value must be less than or equal to Maximum x Value!");
+      return;
+    } else if (tempyMin>=tempyMax) {
+      alert("Minimum y Value must be less than or equal to Maximum y Value!");
+      return;
+    } else if (tempYPos>1) {
+      alert("Vertical Position must be between 0 (top) and 1 (bottom)!");
+      return;
+    }
+
     //update existing scale
     newScales.x[values.xSelect] = {
-      "min": parseFloat(values.xMin),
-      "max": parseFloat(values.xMax),
+      "min": tempxMin,
+      "max": tempxMax,
       "units": values.xUnits,
-      "yPos": parseFloat(values.xYPos),
-      "segments": [] //todo
+      "yPos": tempYPos,
+      "segments": [...newScales.x[values.xSelect].segments] //todo
     }
 
     newScales.y[values.ySelect] = {
-      "min": parseFloat(values.yMin),
-      "max": parseFloat(values.yMax),
+      "min": tempyMin,
+      "max": tempyMax,
       "units": values.yUnits,
       ...(values.yPercent && {"percent": values.yPercent})
     }
@@ -74,7 +109,6 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
     updateSrc(newScales, "scales");
     setActiveScale([values.xSelect, values.ySelect]); //move to updateSrc
     setToggle(null);
-    e.preventDefault();
   };
 
   const handleClose = (e) => {
@@ -88,8 +122,8 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
         scales={scales.x}
         label="X Scale"
         name="xSelect"
-        value={values.xSelect}
-        onChange={handleChange}
+        value={activeScale[0]}
+        onChange={handleSelectScale}
       />
       <InputFormNum
         label="Minimum Value"
@@ -119,7 +153,7 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
         Screen Position<span className="redText">* </span>
         <input
           type="text"
-          placeholder="0 (top) - 1 (bottom)"
+          placeholder="0 (bottom) - 1 (top)"
           name="xYPos"
           value={values.xYPos}
           onChange={handleChange}

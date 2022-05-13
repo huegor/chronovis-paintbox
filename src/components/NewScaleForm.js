@@ -50,8 +50,15 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
     const tempyMin = parseFloat(values.yMin);
     const tempyMax = parseFloat(values.yMax);
 
-    if (tempxMin>=tempxMax) {
-      alert("Minimum Value must be less than or equal to Maximum Value!");
+    //error handling
+    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempYPos) || isNaN(tempyMin) || isNaN(tempyMax)) {
+      alert("Make sure all numerical values are numbers!");
+      return;
+    } else if (tempxMin>=tempxMax) {
+      alert("Minimum x Value must be less than or equal to Maximum x Value!");
+      return;
+    } else if (tempyMin>=tempyMax) {
+      alert("Minimum y Value must be less than or equal to Maximum y Value!");
       return;
     } else if (tempYPos>1) {
       alert("Vertical Position must be between 0 (top) and 1 (bottom)!");
@@ -135,7 +142,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
       <InputFormNum
         label="Screen Position"
         name="xYPos"
-        placeholder="0 (top) - 1 (bottom)"
+        placeholder="0 (bottom) - 1 (top)"
         value={values.xYPos}
         handleChange={handleChange}
         required={true}

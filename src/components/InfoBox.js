@@ -12,6 +12,9 @@ function InfoBox({info, setInfo, history, setHistory, data, zones, updateSrc, ra
   //init
   var content = null;
   const target = Array.isArray(info.target)?info.target[1]:info.target;
+  //TODO
+  const infoXPos = info.position[0];
+  const infoYPos = info.position[1];
   /*
     - structure of instant targets:
       {

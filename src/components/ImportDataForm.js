@@ -4,7 +4,7 @@ import React, { useState } from 'react';
   For saving and downloading JSON data onto computer.
 */
 
-function ImportDataForm({setToggle, setSrc, setScales, setData, setZones, activeData, setActiveData, activeScale, setActiveScale, setFileName, setProj}) {
+function ImportDataForm({setToggle, updateSrc, setFileName, setProj}) {
   const [selectedFile, setSelectedFile] = useState();
 	const [isSelected, setIsSelected] = useState(false);
 
@@ -17,6 +17,10 @@ function ImportDataForm({setToggle, setSrc, setScales, setData, setZones, active
 	const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!selectedFile) {
+      alert("Please select a file!");
+      return;
+    }
     let fileReader = new FileReader();
     fileReader.readAsText(selectedFile);
     fileReader.onload = () => {
@@ -24,12 +28,13 @@ function ImportDataForm({setToggle, setSrc, setScales, setData, setZones, active
       //add different cases for JSON and img
       setFileName(selectedFile.name.replace(".json", "")); //chop off .json extension from name
       // console.log(newSrc);
-      setSrc(newSrc);
-      setScales(newSrc.scales);
-      setActiveScale([Object.keys(newSrc.scales.x)[0],Object.keys(newSrc.scales.y)[0]]);
-      setActiveData(0);
-      setData(newSrc.instants[activeData]);
-      setZones(newSrc.zones);
+      updateSrc(newSrc, "import")
+      // setSrc(newSrc);
+      // setScales(newSrc.scales);
+      // setActiveScale([Object.keys(newSrc.scales.x)[0],Object.keys(newSrc.scales.y)[0]]);
+      // setActiveData(0);
+      // setData(newSrc.instants[activeData]);
+      // setZones(newSrc.zones);
     }
     fileReader.onerror = () => {
       console.log(fileReader.error);

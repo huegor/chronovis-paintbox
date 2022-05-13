@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import './stylesheets/index.scss';
-import Data from "./data.json";
-import NullData from "./NullData.json";
-import TagVisData from "./tagVis_data.json"
+
+/// Component Imports ///
 import Graphic from "./components/Graphic";
 import Image from "./components/Image";
 import NewInstantForm from "./components/NewInstantForm";
@@ -23,6 +22,15 @@ import Connection from "./components/Connection";
 import WelcomeMessage from "./components/WelcomeMessage";
 import generateIntervals from "./components/generateIntervals";
 import EmptyProj from "./components/EmptyProj";
+import DataLibrary from "./components/DataLibrary";
+
+/// Data Imports ///
+import Data from "./data.json";
+import NullData from "./NullData.json";
+import LifeImportanceData from "./life_by_importance.json"
+import TagVisData from "./tagVis.json";
+import WaitingForBusData from "./waiting_for_bus.json"
+
 //for installation
 // import Hands from './components/Hands';
 
@@ -32,6 +40,7 @@ function translateData({data, nullData}) {
   const newInst = newData.instants[0];
   const scaleName = "calendarDate";
   const xValues = [];
+  const yValues = [];
   const segments = [];
   // var key = 0;
   var segmentMin = null;
@@ -41,18 +50,21 @@ function translateData({data, nullData}) {
     newInst[`${datum.id}`] = {
       "x": datum.calendarDate,
       "y": datum.cy,
-      "scale": (datum.calendarDate<0)?"early":scaleName,
-      "target": [datum.targets[datum.targets.length-1]], //???
+      "scale": [(datum.calendarDate<0)?"early":scaleName, "Order in Text"],
+      // "target": [datum.targets[datum.targets.length-1]], //???
       "text": datum.innerText,
       // ...(e.target.color && {"color": e.target.color.value}), //if color is specified, create color entry in data
       // ...(e.target.radius && {"radius": e.target.radius.value}),
       // ...(e.target.opacity && {"opacity": e.target.opacity.value})
     };
     xValues.push(datum.calendarDate);
+    yValues.push(datum.cy)
     // key++;
   }
 
   xValues.sort((a, b) => a-b); //smallest to largest
+  yValues.sort((a, b) => a-b); //smallest to largest
+
 
   // //TODO: automated scale generation
   // xValues.forEach((val, i) => {
@@ -79,7 +91,7 @@ function translateData({data, nullData}) {
   //     // segmentMin = xValues[i+1];
   //   }
   // }
-  newData.scales["early"] = {
+  newData.scales.x["early"] = {
     "min": xValues[0]-10,
     "max": xValues[0]+1000,
     "units": "Years",
@@ -88,12 +100,18 @@ function translateData({data, nullData}) {
     "segments": [{max: xValues[0]}] //todo
   }
 
-  newData.scales[`${scaleName}`] = {
+  newData.scales.x[`${scaleName}`] = {
     "min": xValues[2]-90,
     "max": xValues[xValues.length-1],
     "units": "Years",
     "yPos": 1,
     "segments": [{min:xValues[2]}] //todo
+  }
+
+  newData.scales.y["Order in Text"] = {
+    "min": yValues[0],
+    "max": yValues[xValues.length-1],
+    "units": "paragraph"
   }
 
 
@@ -110,6 +128,21 @@ function translateData({data, nullData}) {
 // }
 
 function App() {
+
+  const projects = {
+    "My Life by Importance": {
+      description:"A temporal model of events in my life organized by importance, as featured in the video tutorial.",
+      data: LifeImportanceData
+    },
+    "The Anthropocene Signal Amidst the Noise": {
+      description:"AKA ChronoVis: TagVis, this data was imported and formatted from the UCLAB Anthropocene Curriculum Project. Special thanks to Francesca Morini and Marian Dörk.",
+      data: TagVisData
+    },
+    "Waiting for the bus": {
+      description:`"I woke up at 7:30 am in someone else's bed today and it took me half an hour to get up. Thankfully, I won't be missing the 8:15AM bus, I thought. I tried to remember what happened last night but all I could recall was leaving the house at 9PM. Anyway, when I got to the bus stop 2 minutes before it was set to arrive, I waited and waited but it never showed up."`,
+      data: WaitingForBusData
+    },
+  }
 
   const scaleData = {
     "imgs": [],
@@ -162,8 +195,10 @@ function App() {
   const [fileName, setFileName] = useState("");
 
   //for the entire ChronoJSON
+  // console.log(translateData({data:TagVisData,nullData:NullData}))
+  // console.log(TagVisData)
   const [src, setSrc] = useState(NullData);
-  // console.log(translateData({data:TagVisData,nullData:nullData}))
+
   //for ChronoJSON history. for undo and redo
   const [history, setHistory] = useState([]) //make fixed length array
 
@@ -193,6 +228,8 @@ function App() {
   //---UI stuff---//
   //UI window toggles
   const [toggle, setToggle] = useState();
+  //Navbar dropdown toggles
+  const [nav, setNav] = useState();
   //UI info boxes for points, intervals, etc.
   const [info, setInfo] = useState();
   //Inflection info
@@ -203,6 +240,19 @@ function App() {
   //--- functions ---//
   const updateSrc = (newData, key) => {
     setHistory([...history, {src:src, activeScale: activeScale, activeData: activeData, activeLayer: activeLayer}]); //history.length-1 is last src before this
+
+    if (key==="import") {
+      //copy & pasted from ImportDataForm
+
+      setScales(newData.scales);
+      setActiveScale([Object.keys(newData.scales.x)[0],Object.keys(newData.scales.y)[0]]);
+      setActiveData(0);
+      setData(newData.instants[activeData]);
+      setZones(newData.zones);
+      setSrc(newData);
+      return;
+    }
+
     const newSrc = src;
     //why is console.log(data) before & after the same, but new data point still shows up
     //have a function where, if incoming data greater than scale max or less than scale min, set that to scale max/min
@@ -216,7 +266,7 @@ function App() {
       setData(newData);
       newSrc.instants[activeData] = data;
     }
-    console.log(history)
+    console.log(history);
     setSrc(newSrc);
     setToggle(null);
   }
@@ -248,6 +298,12 @@ function App() {
 //
   return (
     <>
+      {
+        // <>
+          // <Hands enabled={enabled} setEnabled={setEnabled}/>
+          // <div className="fullHeight" onClick={e => console.log(e.clientX, e.clientY)} />
+        // </>
+      }
 
       {info && <InfoBox
         info={info}
@@ -262,6 +318,7 @@ function App() {
       <NavBar
         toggle={toggle}
         setToggle={setToggle}
+        nav={nav} setNav={setNav}
         data={data} showLabel={showLabel}
         setShowLabel={setShowLabel}
         hasScales={Object.keys(scales.y).length}
@@ -270,116 +327,112 @@ function App() {
         proj={proj}
         undo={undo}
       />
-      {toggle==="scrubber" && <Scrubber activeData={activeData} setActiveData={setActiveData} src={src} setData={setData}/>}
-      {toggle==="NewInstantForm" &&
-        <NewInstantForm
-          data={data}
-          setData={setData}
-          target={inflectTarget}
-          setToggle={setToggle}
-          scales={src.scales}
-          activeScale={activeScale}
-          activeData={activeData}
-          history={history} setHistory={setHistory}
-          updateSrc={updateSrc}
-        />
-      }
-      {toggle==="editScale" && <EditScaleForm scales={scales} updateSrc={updateSrc} setToggle={setToggle} activeScale={activeScale} setActiveScale={setActiveScale}/>}
-      {toggle==="addZone" && <NewZoneForm zones={zones} updateSrc={updateSrc} setToggle={setToggle} scales={scales} activeScale={activeScale}/>}
-      {toggle==="addInterval" && <NewIntervalForm data={data} updateSrc={updateSrc} setToggle={setToggle} scales={scales} activeScale={activeScale} history={history} setHistory={setHistory}/>}
-      {toggle==="addScale" && <NewScaleForm src={src} updateSrc={updateSrc} setToggle={setToggle} setActiveScale={setActiveScale}/>}
-      {toggle==="save" &&
-        <ExportDataForm
-          src={src}
-          setSrc={setSrc}
-          data={data}
-          zones={zones}
-          scales={scales}
-          activeData={activeData}
-          setToggle={setToggle}
-          fileName={fileName}
-        />
-      }
-      {toggle==="legend" && <Legend/>}
-      {toggle==="layers" && <Layers activeLayer={activeLayer} setActiveLayer={setActiveLayer} data={data}/>}
-      {toggle==="import" &&
-        <ImportDataForm
-          setSrc={setSrc}
-          setScales={setScales}
-          setZones={setZones}
-          setData={setData}
-          activeData={activeData}
-          setActiveData={setActiveData}
-          activeScale={activeScale}
-          setActiveScale={setActiveScale}
-          setToggle={setToggle}
-          setProj={setProj}
-          setFileName={setFileName}
-        />
-      }
-      {toggle==="certainty" &&
-        <Certainty
-          target={inflectTarget}
-          setToggle={setToggle}
-          data={data}
-          updateSrc={updateSrc}
-          zones={zones}
-          setZones={setZones}
-        />
-      }
-      {toggle==="importance" &&
-        <Importance
-          target={inflectTarget}
-          setToggle={setToggle}
-          data={data}
-          setData={setData}
-          zones={zones}
-          setZones={setZones}
-          radius={radius}
-          setProj={setProj}
-        />
-      }
-      {toggle==="connection" &&
-        <Connection
-          target={syntacticOrder}
-          setToggle={setToggle}
-          data={data}
-          setData={setData}
-          zones={zones}
-          setZones={setZones}
-        />
-      }
+      <div onClick={(e) => (toggle)?setNav(null):null}>
+        {toggle === "dataLibrary" && <DataLibrary projects={projects} updateSrc={updateSrc} setToggle={setToggle}/>}
+        {toggle==="scrubber" && <Scrubber activeData={activeData} setActiveData={setActiveData} src={src} setData={setData}/>}
+        {toggle==="NewInstantForm" &&
+          <NewInstantForm
+            data={data}
+            setData={setData}
+            target={inflectTarget}
+            setToggle={setToggle}
+            scales={src.scales}
+            activeScale={activeScale}
+            activeData={activeData}
+            history={history} setHistory={setHistory}
+            updateSrc={updateSrc}
+          />
+        }
+        {toggle==="editScale" && <EditScaleForm scales={scales} updateSrc={updateSrc} setToggle={setToggle} activeScale={activeScale} setActiveScale={setActiveScale}/>}
+        {toggle==="addZone" && <NewZoneForm zones={zones} updateSrc={updateSrc} setToggle={setToggle} scales={scales} activeScale={activeScale}/>}
+        {toggle==="addInterval" && <NewIntervalForm data={data} updateSrc={updateSrc} setToggle={setToggle} scales={scales} activeScale={activeScale} history={history} setHistory={setHistory}/>}
+        {toggle==="addScale" && <NewScaleForm src={src} updateSrc={updateSrc} setToggle={setToggle} setActiveScale={setActiveScale}/>}
+        {toggle==="save" &&
+          <ExportDataForm
+            src={src}
+            setSrc={setSrc}
+            data={data}
+            zones={zones}
+            scales={scales}
+            activeData={activeData}
+            setToggle={setToggle}
+            fileName={fileName}
+          />
+        }
+        {toggle==="legend" && <Legend/>}
+        {toggle==="layers" && <Layers activeLayer={activeLayer} setActiveLayer={setActiveLayer} data={data}/>}
+        {toggle==="import" &&
+          <ImportDataForm
+            updateSrc={updateSrc}
+            setToggle={setToggle}
+            setProj={setProj}
+            setFileName={setFileName}
+          />
+        }
+        {toggle==="certainty" &&
+          <Certainty
+            target={inflectTarget}
+            setToggle={setToggle}
+            data={data}
+            updateSrc={updateSrc}
+            zones={zones}
+            setZones={setZones}
+          />
+        }
+        {toggle==="importance" &&
+          <Importance
+            target={inflectTarget}
+            setToggle={setToggle}
+            data={data}
+            setData={setData}
+            zones={zones}
+            setZones={setZones}
+            radius={radius}
+            setProj={setProj}
+          />
+        }
+        {toggle==="connection" &&
+          <Connection
+            target={syntacticOrder}
+            setToggle={setToggle}
+            data={data}
+            setData={setData}
+            zones={zones}
+            setZones={setZones}
+          />
+        }
 
-      {proj ?
-        <div id="main" className="container fullHeight">
-          {Object.keys(scales.x).length ?
-            <Graphic
-              data={data}
-              setData={setData}
-              updateSrc={updateSrc}
-              zones={zones}
-              setZones={setZones}
-              radius={radius}
-              info={info}
-              setInfo={setInfo}
-              setInflectTarget={setInflectTarget}
-              showLabel={showLabel}
-              activeLayer={activeLayer}
-              toggle={toggle}
-              setToggle={setToggle}
-              scales={scales}
-              setScales={setScales}
-              syntacticOrder={syntacticOrder}
-              setSyntacticOrder={setSyntacticOrder}
-              activeScale={activeScale}
-            />
-            : <EmptyProj setToggle={setToggle}/>
-          }
-          {src.imgs.length>0 && <Image urls={src.imgs}/>}
-        </div> :
-        <WelcomeMessage setProj={setProj} setFileName={setFileName} setToggle={setToggle}/>
-      }
-
+        {
+          proj ?
+          <div id="main" className="container fullHeight">
+            {Object.keys(scales.x).length ?
+              <Graphic
+                data={data}
+                setData={setData}
+                updateSrc={updateSrc}
+                zones={zones}
+                setZones={setZones}
+                radius={radius}
+                info={info}
+                setInfo={setInfo}
+                setInflectTarget={setInflectTarget}
+                showLabel={showLabel}
+                activeLayer={activeLayer}
+                toggle={toggle}
+                setToggle={setToggle}
+                scales={scales}
+                setScales={setScales}
+                syntacticOrder={syntacticOrder}
+                setSyntacticOrder={setSyntacticOrder}
+                activeScale={activeScale}
+              />
+              : <EmptyProj toggle={toggle} setToggle={setToggle}/>
+            }
+            {src.imgs.length>0 && <Image urls={src.imgs}/>}
+          </div> :
+          <WelcomeMessage setProj={setProj} setFileName={setFileName} toggle={toggle} setToggle={setToggle}/>
+        }
+      </div>
     </>
   );
 }

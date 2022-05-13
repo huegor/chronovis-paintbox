@@ -4,18 +4,6 @@ nav {
   z-index: 1;
 }
 
-nav button {
-  border: none;
-  // padding: $vPadding $vPadding*1.5;
-  z-index: 1;
-  background: none;
-  display: block;
-}
-
-nav button:hover {
-  background: $accentColorLight;
-}
-
 .icon {
   width: $vPadding*4.2;
 }

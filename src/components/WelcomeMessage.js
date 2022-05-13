@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function WelcomeMessage({setProj, setFileName, setToggle}) {
+function WelcomeMessage({setProj, setFileName, setToggle, toggle}) {
   const [name, setName] = useState("");
 
   const handleSubmit = (e) => {
@@ -10,13 +10,13 @@ function WelcomeMessage({setProj, setFileName, setToggle}) {
   }
 
   return (
-    <div className="fullHeight container bgSecondary">
+    <div className="fullHeight container bgSecondary" onClick={(e) => toggle?setToggle(null):null}>
       <div className="flexCenter thirdWidth">
         <h1>Hi, welcome to <br/>ChronoVis: Paintbox.</h1>
         <p className="smallTxt">By Johanna Drucker, developed by Skye Hoffman.</p>
         <p className="smallTxt">
           A no-code graphical interface for generating temporal data visualizations,
-          designed by the humanities for the humanities. <a href="#">More info here.</a>
+          designed by the humanities for the humanities. <a href="https://tinyurl.com/535yebj3" target="_blank">More info here.</a>
         </p><br/>
         <form className="container containerStretch flexRow" onSubmit={handleSubmit}>
           <input type="text"

@@ -1,13 +1,11 @@
 import React, {useMemo, useEffect, useRef} from 'react';
 import HandsFree from 'handsfree';
+// import EventDispatcher from 'react-event-dispatcher';
 // import hands from '@mediapipe/hands';
 
 //https://handsfree.js.org
+//IMPORTANT: handsfree.js source code has been edited to turn pinchScroll into clicker
 
-function initHandsFree() {
-  //
-
-}
 
 function Hands(props) {
   //init
@@ -17,12 +15,11 @@ function Hands(props) {
     new HandsFree({
       hands:{
         enabled: true,
-        maxNumHands: 2
+        maxNumHands: 1
       }
     }), [ref]);
   handsFree.enablePlugins('browser');
-  // handsFree.plugin.palmPointers.enable()
-  // handsFree.plugin.palmPointers.speed = {x: 2, y: 2}
+  handsFree.plugin.palmPointers.offset = {x: -200, y: -200}
   handsFree.useGesture({
     "name": "horns",
     "algorithm": "fingerpose",
@@ -185,8 +182,7 @@ function Hands(props) {
   useEffect(() => {
     console.log(ref);
     if (ref && ref.current) {
-
-      handsFree.start(()=>{handsFree.pause()}); //initializes loop but pauses it instantly'
+      handsFree.start(()=>{handsFree.pause()}); //initializes loop but pauses it instantly
     }
     // console.log(handsFree.pause);
     //stop webcam on unmount
@@ -207,20 +203,76 @@ function Hands(props) {
     }
   }
 
+  // useEffect(() => {
+  //
+  // }, []);
+
   // all the magic happens here
-  if (props.enabled) {
-    handsFree.on('data', (e) => {
-      //e can either
-      if (!e.hands) return;
-      if (!e.hands.pointer[0].isVisible) return;
-      // console.log(e.hands.pointer[0].isVisible? e.hands.pointer[0] : null);
-      if (e.hands.gesture[0] && e.hands.gesture[0]["name"] === "horns") { //on "horns," mouse click at LH palm pointer
-        console.log(e.hands.pointer[0].x, e.hands.pointer[0].y);
-        // on event, create a new mouseclick event at position of left palm
-        new MouseEvent("click", {clientX: e.hands.pointer[0].x, clientY: e.hands.pointer[0].y});
-      }
-    });
-  }
+  // if (props.enabled) {
+  //   // Maps handsfree pincher events to
+  //   const eventMap =  {
+  //     start: 'mousedown',
+  //     held: 'mousemove',
+  //     released: 'mouseup'
+  //   }
+  //   handsFree.use("gestureClick", (data) => {
+  //     if (!data.hands || !data.hands.pointer || !data.hands.pinchState) return;
+  //     // if (!data.hands.pointer[0].isVisible) return;
+  //     // // console.log(e.hands.pointer[0].isVisible? e.hands.pointer[0] : null);
+  //     // if (data.hands.gesture[0] && data.hands.gesture[0]["name"] === "horns") { //on "horns," mouse click at LH palm pointer
+  //     //   console.log(data.hands);
+  //     //   // console.log(data.hands.pointer[0].x, data.hands.pointer[0].y);
+  //     //   // on event, create a new mouseclick event at position of left palm
+  //     //   new MouseEvent("click", {clientX: data.hands.pointer[0].x, clientY: data.hands.pointer[0].y});
+  //     // }
+  //
+  //     const hands = data.hands;
+  //
+  //     hands.multiHandLandmarks.forEach((landmarks, n) => {
+  //       const pointer = hands.pointer[n] //x, y, isVisible
+  //       const pinchState = hands.pinchState[n]?hands.pinchState[n][0]:''; //start, held, released
+  //       // const curPinch = hands.curPinch[n]?hands.curPinch[n][0]:{x:0, y:0}; //x, y
+  //       // const origPinch = hands.origPinch[n]?hands.origPinch[n][0]:{x:0, y:0} //x, y
+  //
+  //       if (pointer.isVisible && pinchState) {
+  //         const mappedState = eventMap[pinchState];
+  //         const $el = document.elementFromPoint(pointer.x, pointer.y)
+  //         // console.log(pointer.x, pointer.y, adjustedY)
+  //         // console.log(mappedState, pointer.x, pointer.y)
+  //         console.log($el, $el.click)
+  //         if ($el && $el.click) {
+  //           $el.click()
+  //         }
+  //       }
+  //
+  //     })
+  //   })
+  // }
+
+  /*
+
+  - disable pinch scroll
+  - if thumb and index pinched on any hand, dispatch click event
+
+  pinch start:
+  - create click event starting w current point
+  - elementFromPoint(curPinch[1][0].x, curPinch[1][0].y)
+
+  pinch held:
+  - create mouse move events
+
+  pinch released:
+  - create mouse up event
+
+  data.hands.pinchState[0][0] -> gets state of LH index finger
+  can be either "start", "held", "released"
+  handsFree.on(handsfree-finger-pinched-start-0)
+  handsFree.on(handsfree-finger-pinched-held-0)
+  handsFree.on(handsfree-finger-pinched-released-0)
+
+
+  */
+
 
   /*
     TODO:
