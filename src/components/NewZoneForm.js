@@ -72,50 +72,44 @@ function NewZoneForm({zones, updateSrc, setToggle, scales, activeScale}) {
 
   return (
     <form className="ui absolute center container">
-      <label>
-        Label<span className="redText">* </span>
-        <input type="text"
-          placeholder="any unicode characters"
-          name="text"
-          value={values.text}
-          onChange={handleChange}
-          required
-        />
-      </label><br/>
+
+      <InputFormText
+        label="Label"
+        name="text"
+        onChange={handleChange}
+        value={values.text}
+        required
+      />
       <InputFormScale
         scales={scales.x}
         label="X Scale"
         name="xScale"
         value={values.xScale}
         onChange={handleChange}
-      /><br/>
+      />
       <InputFormScale
         scales={scales.y}
         label="Y Scale"
         name="yScale"
         value={values.yScale}
         onChange={handleChange}
-      /><br/>
-      <label>
-        Time Start<span className="redText">* </span>
-        <input type="text"
-          placeholder="#s, dates, logical operators"
-          name="start"
-          value={values.start}
-          onChange={handleChange}
-          required
-        />
-      </label><br/>
-      <label>
-        Time End<span className="redText">* </span>
-        <input type="text"
-          placeholder="#s, dates, logical operators"
-          name="end"
-          value={values.end}
-          onChange={handleChange}
-          required
-        />
-      </label><br/>
+      />
+      <InputFormNum
+        label="Time Start"
+        placeholder="numbers only for now"
+        name="start"
+        value={values.start}
+        onChange={handleChange}
+        required
+      />
+      <InputFormNum
+        label="Time End"
+        placeholder="numbers only for now"
+        name="end"
+        value={values.end}
+        onChange={handleChange}
+        required
+      />
       {/*<label>
         Y Start
         <input
@@ -125,7 +119,7 @@ function NewZoneForm({zones, updateSrc, setToggle, scales, activeScale}) {
           value={values.yStart}
           onChange={handleChange}
         />
-      </label><br/>
+      </label>
       <label>
         Y End
         <input
@@ -135,27 +129,21 @@ function NewZoneForm({zones, updateSrc, setToggle, scales, activeScale}) {
           value={values.yEnd}
           onChange={handleChange}
         />
-      </label><br/>*/}
-      <label>
-        Color
-        <input
-          type="text"
-          name="color"
-          placeholder="blue, #4DA6FF, etc."
-          value={values.color}
-          onChange={handleChange}
-        />
-      </label><br/>
-      <label>
-        Opacity
-        <input
-          type="number"
-          placeholder="0 (transparent) - 1 (opaque)"
-          name="opacity"
-          value={values.opacity}
-          onChange={handleChange}
-        />
-      </label><br/>
+      </label>*/}
+      <InputFormText
+        label="Color"
+        name="color"
+        placeholder="blue, #4DA6FF, etc."
+        value={values.color}
+        onChange={handleChange}
+      />
+      <InputFormNum
+        label="Certainty"
+        name="opacity"
+        placeholder="0 to 1 (default 1)"
+        value={values.opacity}
+        onChange={handleChange}
+      /><br/>
       <div className="flexCenter">
         <button className="buttonSecondary" onClick={handleClose}>Cancel</button> &nbsp;
         <button className="buttonSecondary" onClick={handleSubmit}>Submit</button>

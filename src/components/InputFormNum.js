@@ -1,12 +1,12 @@
-const InputFormNum = ({label, name, value, placeholder, handleChange, required}) => {
+const InputFormNum = ({label, name, value, placeholder, onChange, required}) => {
   return (
     <label className="textSecondary">
       {label} {required && <span className="redText">* </span>}
-      <input type="text"
-        placeholder={placeholder?placeholder:"Any real number"}
+      <input type="number"
+        placeholder={placeholder?placeholder:"integer or decimal"}
         name={name}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         required={required}
       />
     </label>

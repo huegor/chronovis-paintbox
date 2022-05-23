@@ -76,8 +76,11 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
     const tempyMax = parseFloat(values.yMax);
 
     //error handling
-    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempYPos) || isNaN(tempyMin) || isNaN(tempyMax)) {
-      alert("Make sure all numerical values are numbers!");
+    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempyMin) || isNaN(tempyMax)) {
+      alert("Make sure all required fields are filled in!");
+      return;
+    } else if (tempYPos>1 || tempYPos<0) {
+      alert("Vertical position must be between 0 (bottom of the screen) and 1 (top of the screen).")
       return;
     } else if (tempxMin>=tempxMax) {
       alert("Minimum x Value must be less than or equal to Maximum x Value!");
@@ -116,6 +119,18 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
     e.preventDefault();
   }
 
+/*
+<label className="textSecondary">
+  Segments
+  <input
+    type="number"
+    placeholder="granularities within scale"
+    name="xSegmentsNum"
+    value={values.xSegmentsNum}
+    onChange={handleChange}
+  />
+</label><br/>
+*/
   return (
     <form className="ui absolute center container">
       <InputFormScale
@@ -130,7 +145,7 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
         name="xMin"
         placeholder="#s for now"
         value={values.xMin}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
@@ -138,38 +153,24 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
         name="xMax"
         placeholder="#s for now"
         value={values.xMax}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
+      />
+      <InputFormNum
+        label="Vertical Position"
+        name="xYPos"
+        placeholder="0 (bottom) to 1 (top)"
+        value={values.xYPos}
+        onChange={handleChange}
       />
       <InputFormText
         label="Units Label"
         name="xUnits"
         placeholder="ie: Years"
         value={values.xUnits}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
-      />
-      <label className="textSecondary">
-        Screen Position<span className="redText">* </span>
-        <input
-          type="text"
-          placeholder="0 (bottom) - 1 (top)"
-          name="xYPos"
-          value={values.xYPos}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label className="textSecondary">
-        Segments
-        <input
-          type="number"
-          placeholder="granularities within scale"
-          name="xSegmentsNum"
-          value={values.xSegmentsNum}
-          onChange={handleChange}
-        />
-      </label><br/>
+      /><br/>
       <InputFormScale
         scales={scales.y}
         label="Y Scale"
@@ -177,36 +178,30 @@ function EditScaleForm({scales, updateSrc, setToggle, activeScale, setActiveScal
         value={values.ySelect}
         onChange={handleChange}
       />
-      <label className="textSecondary">
-        Minimum Value<span className="redText">* </span>
-        <input type="text"
-          placeholder="#s for now"
-          name="yMin"
-          value={values.yMin}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label className="textSecondary">
-        Maximum Value<span className="redText">* </span>
-        <input type="text"
-          placeholder="#s for now"
-          name="yMax"
-          value={values.yMax}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label className="textSecondary">
-        Units Label<span className="redText">* </span>
-        <input type="text"
-          placeholder="ie: Years"
-          name="yUnits"
-          value={values.yUnits}
-          onChange={handleChange}
-          required
-        />
-      </label><br/>
+      <InputFormNum
+        label="Minimum Value"
+        name="yMin"
+        placeholder="#s for now"
+        value={values.yMin}
+        onChange={handleChange}
+        required={true}
+      />
+      <InputFormNum
+        label="Maximum Value"
+        name="yMax"
+        placeholder="#s for now"
+        value={values.yMax}
+        onChange={handleChange}
+        required={true}
+      />
+      <InputFormText
+        label="Units Label"
+        name="yUnits"
+        placeholder="ie: Years"
+        value={values.yUnits}
+        onChange={handleChange}
+        required={true}
+      /><br/>
       <div className="flexCenter">
         <button className="buttonSecondary" onClick={handleClose}>Cancel</button> &nbsp;
         <button className="buttonSecondary" onClick={handleSubmit}>Submit</button>

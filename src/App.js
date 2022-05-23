@@ -31,9 +31,6 @@ import LifeImportanceData from "./life_by_importance.json"
 import TagVisData from "./tagVis.json";
 import WaitingForBusData from "./waiting_for_bus.json"
 
-//for installation
-// import Hands from './components/Hands';
-
 
 function translateData({data, nullData}) {
   const newData = {...nullData};
@@ -184,8 +181,6 @@ function App() {
     }
   };
 
-  //for installation
-  const [enabled, setEnabled] = useState(false);
 
   //user defined
   const radius = 4;
@@ -236,14 +231,11 @@ function App() {
   const [inflectTarget, setInflectTarget] = useState();
   //Syntactic inflections order
   const [syntacticOrder, setSyntacticOrder] = useState([null, null, null]); //[target1, target2, #]. # dictates order, switches b/w 0 and 1
-
   //--- functions ---//
   const updateSrc = (newData, key) => {
     setHistory([...history, {src:src, activeScale: activeScale, activeData: activeData, activeLayer: activeLayer}]); //history.length-1 is last src before this
-
     if (key==="import") {
       //copy & pasted from ImportDataForm
-
       setScales(newData.scales);
       setActiveScale([Object.keys(newData.scales.x)[0],Object.keys(newData.scales.y)[0]]);
       setActiveData(0);
@@ -252,7 +244,6 @@ function App() {
       setSrc(newData);
       return;
     }
-
     const newSrc = src;
     //why is console.log(data) before & after the same, but new data point still shows up
     //have a function where, if incoming data greater than scale max or less than scale min, set that to scale max/min
@@ -273,9 +264,15 @@ function App() {
 
  const undo = () => {
    const newHistory = [...history];
-   const last = newHistory.pop();
-   if (newHistory.length&&(last !== undefined)) {
-     console.log(newHistory.pop())
+   const last = newHistory.pop(); //pop() changes length of array
+
+   if (last === undefined) {
+     setHistory([]);
+   } else if (!last.activeScale[0] || !last.activeScale[1]) {
+     setHistory([]);
+   } else {
+     console.log(last)
+     console.log(newHistory)
      setHistory([newHistory]);
      setActiveScale(last.activeScale);
      setActiveData(last.activeData);
@@ -284,8 +281,9 @@ function App() {
      setScales(last.src.scales);
      setData(last.src.instants[activeData]);
      setZones(last.src.zones);
-   } else {
-     //turn off undo button
+     if (!newHistory.length) { //length after
+       setHistory([]);
+     }
    }
  }
 
@@ -298,13 +296,6 @@ function App() {
 //
   return (
     <>
-      {
-        // <>
-          // <Hands enabled={enabled} setEnabled={setEnabled}/>
-          // <div className="fullHeight" onClick={e => console.log(e.clientX, e.clientY)} />
-        // </>
-      }
-
       {info && <InfoBox
         info={info}
         setInfo={setInfo}
@@ -325,7 +316,7 @@ function App() {
         fileName={fileName}
         setFileName={setFileName}
         proj={proj}
-        undo={undo}
+        undo={undo} canUndo={history.length}
       />
       <div onClick={(e) => (toggle)?setNav(null):null}>
         {toggle === "dataLibrary" && <DataLibrary projects={projects} updateSrc={updateSrc} setToggle={setToggle}/>}

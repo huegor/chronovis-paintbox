@@ -101,6 +101,9 @@ function Graphic({
       svg
         .selectAll(".zones")
         .remove();
+      svg
+        .selectAll(".zonesLabel")
+        .remove();
     }
 
     //rounding for data inputted thru paintbox interface
@@ -269,8 +272,6 @@ function Graphic({
       // .range((rangeY>breakpoint) ? [-rangeY, rangeY] : [-breakpoint*5, breakpoint*5]);
 
 
-    console.log(scales, xScales, yScale)
-
     if (Object.entries(zones).length) {
       svg
       .selectAll(".zones")
@@ -302,10 +303,21 @@ function Graphic({
           setInflectTarget(target);
         } else if (toggle!=="pan" || toggle!=="addInstant"){ //displays zone properties when clicked
           setInfo(null); //clear InfoBox
-          setInfo({position: [e.x, e.y], target: target, type: "zone"});  //TODO: set info to null when clicking same zone again
+          setInfo({position: [e.x, e.y], target: target, type: "zone", dimensions: dimensions});  //TODO: set info to null when clicking same zone again
         }
         e.stopPropagation();
       });
+
+      svg
+        .selectAll(".zonesLabel")
+        .data(activeZones)
+        .join("text")
+        .attr("class", "zonesLabel")
+        .text(([k,v]) => v.text)
+        .attr("opacity", 0.5)
+        .attr("x", ([, v]) => xScales[v.scale[0]].scale(v.start)+10)
+        .attr("y", yScale(yMax)+30) //.05 above max y
+        .attr("text-anchor", "bottom");
     }
 
     //---draw bottom axis---//
@@ -487,7 +499,7 @@ function Graphic({
             setInflectTarget(target);
           } else {
             setInfo(null); //clear InfoBox
-            setInfo({position: [e.x, e.y], target: target, type: "interval"}); //displays interval properties when clicked
+            setInfo({position: [e.x, e.y], target: target, type: "interval", dimensions: dimensions}); //displays interval properties when clicked
           }
           e.stopPropagation();
         });
@@ -559,7 +571,7 @@ function Graphic({
               break;
             default:
               setInfo(null); //clear InfoBox
-              setInfo({position: [e.x, e.y], target: target}); //displays instant properties when clicked
+              setInfo({position: [e.x, e.y], target: target, dimensions: dimensions}); //displays instant properties when clicked
           }
           // if (toggle==="cancelled") {
           //   const newInstants = [...data];
@@ -736,10 +748,10 @@ function Graphic({
 */
       //---draw labels---//
       // svg
-      //   .selectAll(".zoneLabel")
+      //   .selectAll(".zonesLabel")
       //   .data(zones)
       //   .join("text")
-      //   .attr("class", "zoneLabel")
+      //   .attr("class", "zonesLabel")
       //   .text(v => v.text)
       //   .attr("x", v => xScales[v.scale].scale(v.start))
       //   .attr("y", v => yScale(v.yStart?v.yStart:yMin+5))

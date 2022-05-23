@@ -12,9 +12,35 @@ function InfoBox({info, setInfo, history, setHistory, data, zones, updateSrc, ra
   //init
   var content = null;
   const target = Array.isArray(info.target)?info.target[1]:info.target;
-  //TODO
-  const infoXPos = info.position[0];
-  const infoYPos = info.position[1];
+
+  //get standard document dimensions accross browsers
+  const body = document.body;
+  const html = document.documentElement;
+  const docuHeight = Math.max( body.scrollHeight, body.offsetHeight,
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+  const docuWidth = Math.max( body.scrollWidth, body.offsetWidth,
+                        html.clientWidth, html.scrollWidth, html.offsetWidth );
+
+  //Positions
+  const infoPos = {}
+  const halfWidth = info.dimensions.width/2;
+  const halfHeight = info.dimensions.height/2;
+  if (info.position[0]>halfWidth) {
+    infoPos["right"] = docuWidth-info.position[0]+'px';
+  } else {
+    infoPos["left"] = info.position[0]+'px';
+  }
+  if (info.position[1]>halfHeight) {
+    infoPos["bottom"] = docuHeight-info.position[1]+'px';
+  } else {
+    infoPos["top"] = info.position[1]+'px';
+  }
+
+  // const infoXPos = (info.position[0]<halfWidth)?{right: info.position[0]+'px'}:{left: info.position[0]+'px'};
+  // const infoYPos = (info.position[1]<halfHeight)?{bottom: info.position[1]+'px'}:{top: info.position[1]+'px'};
+  // const infoPos = {
+  //   ...(info.position[0] && {})
+  // }
   /*
     - structure of instant targets:
       {
@@ -248,7 +274,6 @@ console.log(newZones[info.target[0]]);
     e.preventDefault();
     const newZones = {...zones};
     delete newZones[info.target[0]];
-    //won't delete if there is only 1 zone left
     updateSrc(newZones, "zones");
     setInfo(null);
   }
@@ -359,7 +384,7 @@ console.log(newZones[info.target[0]]);
   };
 
   return (
-    <div className="ui absolute" style={{left: info.position[0] + 'px', top: info.position[1] + 'px'}}>
+    <div className="ui absolute" style={infoPos}>
       {content}
     </div>
   );

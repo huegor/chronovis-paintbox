@@ -30,7 +30,7 @@ function WelcomeMessage({setProj, setFileName, setToggle, toggle}) {
         </form><br/>
         <div className="container flexRow">
           <button className="buttonPrimary" onClick={(e) => setToggle("import")}>Import Project</button>&nbsp;&nbsp;&nbsp;
-          <button className="buttonPrimary" onClick={(e) => {e.preventDefault(); window.open("https://youtu.be/y0sMNCfgH-8")}}>
+          <button className="buttonPrimary" onClick={(e) => {e.preventDefault(); window.open("https://youtu.be/beCqxNeXICs")}}>
             First Time?
           </button>
         </div>

@@ -51,8 +51,11 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
     const tempyMax = parseFloat(values.yMax);
 
     //error handling
-    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempYPos) || isNaN(tempyMin) || isNaN(tempyMax)) {
-      alert("Make sure all numerical values are numbers!");
+    if (isNaN(tempxMin) || isNaN(tempxMax) || isNaN(tempyMin) || isNaN(tempyMax)) {
+      alert("Make sure all required fields are filled in!");
+      return;
+    } else if (tempYPos>1 || tempYPos<0) {
+      alert("Vertical position must be between 0 (bottom of the screen) and 1 (top of the screen).")
       return;
     } else if (tempxMin>=tempxMax) {
       alert("Minimum x Value must be less than or equal to Maximum x Value!");
@@ -72,7 +75,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
       "min": tempxMin,
       "max": tempxMax,
       "units": values.xUnits,
-      "yPos": tempYPos,
+      "yPos": tempYPos?tempYPos:0,
       // "hideUnits":values.xHideUnits,
       "segments": [] //todo
     }
@@ -104,6 +107,16 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
       onChange={(e) => setValues({...values, xHideUnits:e.target.checked})}
     />
   </label>
+  <label className="textSecondary">
+    Segments
+    <input
+      type="number"
+      placeholder="granularities within scale"
+      name="xSegmentsNum"
+      value={values.xSegmentsNum}
+      onChange={handleChange}
+    />
+  </label><br/>
   */
   return (
     <form className="ui absolute center container">
@@ -112,7 +125,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         label="Name"
         name="xName"
         value={values.xName}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormText
@@ -120,7 +133,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="xUnits"
         placeholder="ie: Years"
         value={values.xUnits}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
@@ -128,7 +141,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="xMin"
         placeholder="#s for now"
         value={values.xMin}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
@@ -136,33 +149,22 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="xMax"
         placeholder="#s for now"
         value={values.xMax}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
-        label="Screen Position"
+        label="Vertical Position"
         name="xYPos"
-        placeholder="0 (bottom) - 1 (top)"
+        placeholder="0 (bottom) to 1 (top)"
         value={values.xYPos}
-        handleChange={handleChange}
-        required={true}
-      />
-      <label className="textSecondary">
-        Segments
-        <input
-          type="number"
-          placeholder="granularities within scale"
-          name="xSegmentsNum"
-          value={values.xSegmentsNum}
-          onChange={handleChange}
-        />
-      </label><br/>
+        onChange={handleChange}
+      /><br/>
       <span className="textSecondary"><b>y scale</b></span><br/>
       <InputFormText
         label="Name"
         name="yName"
         value={values.yName}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormText
@@ -170,7 +172,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="yUnits"
         placeholder="ie: Years"
         value={values.yUnits}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
@@ -178,7 +180,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="yMin"
         placeholder="#s for now"
         value={values.yMin}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <InputFormNum
@@ -186,7 +188,7 @@ function NewScaleForm({src, updateSrc, setToggle, setActiveScale}) {
         name="yMax"
         placeholder="#s for now"
         value={values.yMax}
-        handleChange={handleChange}
+        onChange={handleChange}
         required={true}
       />
       <br/>

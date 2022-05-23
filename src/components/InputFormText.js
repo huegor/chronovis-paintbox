@@ -1,4 +1,4 @@
-const InputFormText = ({label, name, placeholder, value, handleChange, required}) => {
+const InputFormText = ({label, name, placeholder, value, onChange, required}) => {
   return (
     <label className="textSecondary">
       {label} {required && <span className="redText">* </span>}
@@ -6,7 +6,7 @@ const InputFormText = ({label, name, placeholder, value, handleChange, required}
         placeholder={placeholder?placeholder:"any unicode characters"}
         name={name}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         required={required}
       />
     </label>

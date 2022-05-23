@@ -1,5 +1,8 @@
 import React from 'react';
 import InputFormScale from './InputFormScale';
+import InputFormText from './InputFormText';
+import InputFormNum from './InputFormNum';
+
 /*
    UI and function for adding new points.
 */
@@ -10,8 +13,8 @@ class NewInstantForm extends React.Component {
     super(props);
     this.state = {
       label: '',
-      xValue: props.target.x, //"target" is scaled mouse click coordinates. Graphics.js addInstant
-      yValue: props.target.y,
+      xValue: props.target?props.target.x:'', //"target" is scaled mouse click coordinates. Graphics.js addInstant
+      yValue: props.target?props.target.y:'',
       xScale: props.activeScale[0],
       yScale: props.activeScale[1],
       color: '',
@@ -26,6 +29,7 @@ class NewInstantForm extends React.Component {
   }
 
   handleChange(e) {
+    console.log(e)
     const value = e.target.value;
     const name = e.target.name;
     this.setState({
@@ -78,80 +82,63 @@ class NewInstantForm extends React.Component {
 
     return (
       <form className="ui absolute center container">
-        <label>
-          Label
-          <input type="text"
-            name="label"
-            placeholder="any unicode characters"
-            value={this.state.label}
-            onChange={this.handleChange}
-          />
-        </label><br/>
+        <InputFormText
+          label="Label"
+          name="label"
+          onChange={this.handleChange}
+          value={this.state.label}
+        />
         <InputFormScale
           scales={this.props.scales.x}
           label="X Scale"
           name="xScale"
           value={this.state.xScale}
           onChange={this.handleChange}
-        /><br/>
-        <label>
-          Time<span className="redText">* </span>
-          <input
-            type="number"
-            name="xValue"
-            placeholder="numbers only"
-            value={this.state.xValue}
-            onChange={this.handleChange}
-            required
-          />
-        </label><br/>
+        />
+        <InputFormNum
+          label="Time"
+          name="xValue"
+          placeholder="numbers only for now"
+          value={this.state.xValue}
+          onChange={this.handleChange}
+          required
+        />
         <InputFormScale
           scales={this.props.scales.y}
           label="Y Scale"
           name="yScale"
           value={this.state.yScale}
           onChange={this.handleChange}
-        /><br/>
-        <label>
-          y Position
-          <input
-            type="number"
-            name="yValue"
-            placeholder="#s only (default 0)"
-            value={this.state.yValue}
-            onChange={this.handleChange}
-          />
-        </label><br/>
-        <label>
-          Color
-          <input
-            type="text"
-            name="color"
-            placeholder="blue, #4DA6FF, etc."
-            value={this.state.color}
-            onChange={this.handleChange}
-          />
-        </label><br/>
-        <label>
-          Opacity
-          <input
-            type="number"
-            name="opacity"
-            placeholder="1"
-            value={this.state.opacity}
-            onChange={this.handleChange}
-          />
-        </label><br/>
-        <label>
-          Radius
-          <input
-            type="number"
-            name="radius"
-            placeholder="5"
-            value={this.state.radius}
-            onChange={this.handleChange}
-          />
-        </label><br/>
+        />
+        <InputFormNum
+          label="Y Value"
+          name="yValue"
+          placeholder="numbers only for now"
+          value={this.state.yValue}
+          onChange={this.handleChange}
+          required
+        />
+        <InputFormText
+          label="Color"
+          name="color"
+          placeholder="blue, #4DA6FF, etc."
+          value={this.state.color}
+          onChange={this.handleChange}
+        />
+        <InputFormNum
+          label="Certainty"
+          name="opacity"
+          placeholder="0 to 1 (default 1)"
+          value={this.state.opacity}
+          onChange={this.handleChange}
+        />
+        <InputFormNum
+          label="Radius"
+          name="radius"
+          placeholder="(default 5)"
+          value={this.state.radius}
+          onChange={this.handleChange}
+        />
         <br/>
         <div className="flexCenter">
           <button className="buttonSecondary" onClick={this.handleClose}>Cancel</button> &nbsp;

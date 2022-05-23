@@ -41,9 +41,9 @@ function NavBar(props) {
       const confirm = window.confirm("Are you sure you want to begin a new project?")
       if (confirm) window.location.reload();
     } else if (ref==="about") {
-      window.open("https://docs.google.com/document/d/1QgYcAYyawUQpgWIHhZpVytLEUvqQ3-6U/edit?usp=sharing&ouid=116007712725124035967&rtpof=true&sd=true");
+      window.open("https://docs.google.com/document/d/1QgYcAYyawUQpgWIHhZpVytLEUvqQ3-6U");
     } else if (ref==="tutorial") {
-      window.open("https://youtu.be/y0sMNCfgH-8");
+      window.open("https://youtu.be/beCqxNeXICs");
     } else if (ref==="documentation") {
       window.open("https://github.com/huegor/chronovis-paintbox");
     } else { //otherwise, activate tool
@@ -109,7 +109,7 @@ function NavBar(props) {
             <button className="fullWidth" onClick={(e) => handleClick("file", e)} disabled={!props.proj} title="File"><IconFile className="icon" alt="File"/></button>
             {props.nav==="file" && <ul className="dropdown-content  ">
               <li className="subheading">Edit</li>
-              <li><button onClick={props.undo}>Undo (BETA)</button></li>
+              <li><button onClick={props.undo} disabled={!props.canUndo}>Undo (BETA)</button></li>
               <li><button onClick={(e) => handleClick("redo", e)} disabled>Redo</button></li>
               <li className="subheading">Document</li>
               <li><button onClick={(e) => handleClick("save", e)}>Save & Export</button></li>
