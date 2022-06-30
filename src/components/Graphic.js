@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { select, scaleLinear, scaleOrdinal, axisBottom, axisLeft, linkHorizontal, format, drag, zoom, min, max, symbol, symbols } from "d3";
 import useResizeObserver from "./useResizeObserver";
 import generateIntervals from "./generateIntervals";
+import DrawCancel from "./DrawCancel";
 
 function Graphic({
   data, setData,
@@ -24,7 +25,7 @@ function Graphic({
   //TODO: layers
   // const activeData = activeLayer ? Object.entries(data).filter(([k,v]) => v.layer === activeLayer) : arrayData;
 
-  //convert scale object to array for faster processing
+
 
 
   //is logical operators active?
@@ -548,7 +549,7 @@ function Graphic({
                 newOrder[1] = target;
                 newOrder[2] = 1;
               } else { //set 1st selection
-                newOrder[0] = target;
+              
                 newOrder[2] = 0;
               }
               setSyntacticOrder(newOrder);
@@ -652,24 +653,24 @@ function Graphic({
         .attr("stroke-dasharray", "3")
 */
       //initialize custom symbols
-      const cancelledSymbol = {
-        draw: (context, size) => {
-          let s = Math.sqrt(size)/2;
-              context.moveTo(s,0);
-              context.lineTo(s*2,s);
-              context.lineTo(s,s*2);
-              context.lineTo(0,s);
-              context.lineTo(-s,s*2);
-              context.lineTo(-s*2,s);
-              context.lineTo(-s,0);
-              context.lineTo(-s*2,-s);
-              context.lineTo(-s,-s*2);
-              context.lineTo(0,-s);
-              context.lineTo(s,-s*2);
-              context.lineTo(s*2,-s);
-              context.closePath();
-        }
-      };
+      // const cancelledSymbol = {
+      //   draw: (context, size) => {
+      //     let s = Math.sqrt(size)/2;
+      //         context.moveTo(s,0);
+      //         context.lineTo(s*2,s);
+      //         context.lineTo(s,s*2);
+      //         context.lineTo(0,s);
+      //         context.lineTo(-s,s*2);
+      //         context.lineTo(-s*2,s);
+      //         context.lineTo(-s,0);
+      //         context.lineTo(-s*2,-s);
+      //         context.lineTo(-s,-s*2);
+      //         context.lineTo(0,-s);
+      //         context.lineTo(s,-s*2);
+      //         context.lineTo(s*2,-s);
+      //         context.closePath();
+      //   }
+        
       /*
       //foreshadowing symbol
       const fsSymbol = {
