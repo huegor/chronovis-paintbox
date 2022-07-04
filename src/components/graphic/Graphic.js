@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { select, scaleLinear, scaleOrdinal, axisBottom, axisLeft, linkHorizontal, format, drag, zoom, min, max, symbol, symbols } from "d3";
-import useResizeObserver from "./useResizeObserver";
-import generateIntervals from "./generateIntervals";
-import DrawCancel from "./DrawCancel";
+import useResizeObserver from "../useResizeObserver";
+import generateIntervals from "../generateIntervals";
 
 function Graphic({
   data, setData,
@@ -25,7 +24,7 @@ function Graphic({
   //TODO: layers
   // const activeData = activeLayer ? Object.entries(data).filter(([k,v]) => v.layer === activeLayer) : arrayData;
 
-
+  //convert scale object to array for faster processing
 
 
   //is logical operators active?
@@ -65,14 +64,6 @@ function Graphic({
 
   //initialize intervals between instants
   const intervals = generateIntervals(data); //TODO: write updateIntervals function
-
-  //initialize variables
-  /*
-  var xMin = min(Object.entries(data).map(([key, {x}]) => logic ? logicScale(x) : x));
-  var xMax = max(Object.entries(data).map(([key, {x}]) => logic ? logicScale(x) : x));
-  var yMin = min(Object.entries(data).map(([key, {y}]) => y));
-  var yMax = max(Object.entries(data).map(([key, {y}]) => y));
-  */
 
   //all d3 shennanigans goes in this hook. called initially and on every data change
   useEffect(() => {
@@ -133,56 +124,13 @@ function Graphic({
     const rangeY = yMax-yMin;
 
 
-    /*
-    - Allow users to specify scale. x&y min max and units label
-    - for each scale, generateScale()
-    */
-
-    // function generateScales(currentScale) { //TODO: turn into dedicated scaleDrag
-    //
-    //   const xInverse = scaleLinear()
-    //     .domain([0, dimensions.width])
-    //     .range([currentScale.min, currentScale.max]) //maxRangeX-minRangeX gives section of x values displayed onscreen
-    //   const xDrag = scaleLinear()
-    //     .domain([-dimensions.width, dimensions.width])
-    //     .range([-(currentScale.domain()[1]-currentScale.domain()[0]), (currentScale.domain()[1]-currentScale.domain()[0])]) //maxRangeX-minRangeX gives section of x values displayed onscreen
-    //   const yInverse = scaleLinear()
-    //     .domain([-dimensions.height, dimensions.height])
-    //     .range((rangeY>breakpoint) ? [-rangeY, rangeY] : [-breakpoint*5, breakpoint*5])
-    //
-    //
-    //   return {
-    //     xInverse, xDrag, yInverse
-    //   };
-    // }
     const xInverse = (currentScale) => scaleLinear()
       .domain([0, dimensions.width])
       .range([currentScale.min, currentScale.max]) //maxRangeX-minRangeX gives section of x values displayed onscreen
     const xDrag = (currentScale) => scaleLinear()
       .domain([-dimensions.width, dimensions.width])
       .range([-(currentScale.domain()[1]-currentScale.domain()[0]), (currentScale.domain()[1]-currentScale.domain()[0])]) //maxRangeX-minRangeX gives section of x values displayed onscreen
-    // const yInverse = scaleLinear()
-    //   .domain([-dimensions.height, dimensions.height])
-    //   .range((rangeY>breakpoint) ? [-rangeY, rangeY] : [-breakpoint*5, breakpoint*5])
 
-
-    //scales values to screen pixels
-    /*
-    {
-      biggie: {
-        ...
-        scale: generateScale()
-      }
-      ...
-    }
-    */
-
-    /*
-    xScale =
-    {
-
-  }
-    */
 
 
     //TODO: fromEntries & entries not compatible with some older browsers
@@ -251,18 +199,12 @@ function Graphic({
 
 
     };
-    // const xScale = scaleLinear()
-    //   .domain([xMin, xMax]) //scaleLinear takes domain (data values) & maps onto range (screen pixel values)
-    //   .range([0, dimensions.width]);
+
     const yScale = scaleLinear()
-      //if difference in y vaules greater than 5, resize to min and max
-      // .domain((rangeY>breakpoint) ? [yMin, yMax] : [yMin-breakpoint, yMax+breakpoint])
+
       .domain([yMin, yMax])
       .range([dimensions.height,0]);
-    //inverse scales for drag behavior
-    // const xScaleInverse = scaleLinear()
-    //   .domain([-dimensions.width, dimensions.width])
-    //   .range([-rangeX, rangeX]); //maxRangeX-minRangeX gives section of x values displayed onscreen
+
     const yScaleInverse = scaleLinear()
       .domain([0, dimensions.height])
       .range([yMin, yMax])
@@ -286,14 +228,7 @@ function Graphic({
       .attr("width", ([, v]) => xScales[v.scale[0]].scale(v.end) - xScales[v.scale[0]].scale(v.start))
       .attr("height", ([, v]) => {
         return (yScale(yMin))
-        // if (v.yStart & v.yEnd) {
-        //   return (yScale(v.yStart)-yScale(v.yEnd))
-        // } else if (v.yStart) {
-        //   return (yScale(v.yStart)-yScale(yMax-10))
-        // } else {
-        //   return (yScale(yMax-10)) //TODO: if no yStart, minimum y value
-        //   // return (yScale(minMax[3])-yScale(minMax[2]))
-        // }
+
       })
       .attr("opacity", ([k, v]) => v.opacity ? v.opacity : 0.5)
       .attr("fill", ([k, v]) => v.color ? v.color : "#999")
@@ -487,15 +422,7 @@ function Graphic({
             }
             setSyntacticOrder(newOrder);
           }
-          //else if (toggle==="foreshadowing") {
-          //   if (!target.target) { //if target is an endpoint, indeterminate end
-          //
-          //
-          //   } else { //otherwise, change mouse to no symbol
-          //
-          //   }
-          //   //option to adjust gradient eventually
-          // } else
+
           else if (toggle==="certainty" || toggle==="importance") {
             setInflectTarget(target);
           } else {
@@ -549,7 +476,7 @@ function Graphic({
                 newOrder[1] = target;
                 newOrder[2] = 1;
               } else { //set 1st selection
-              
+                newOrder[0] = target;
                 newOrder[2] = 0;
               }
               setSyntacticOrder(newOrder);
@@ -574,136 +501,29 @@ function Graphic({
               setInfo(null); //clear InfoBox
               setInfo({position: [e.x, e.y], target: target, dimensions: dimensions}); //displays instant properties when clicked
           }
-          // if (toggle==="cancelled") {
-          //   const newInstants = [...data];
-          //   const instant = newInstants.find(n => n.id === target.id);
-          //   instant.cancelled = true;
-          //   setData(newInstants);
-          // } else if (){
-          //
-          // } else if (toggle==="connection") {
-          //   const newOrder = [...syntacticOrder];
-          //   if (newOrder[2]===0) { //set 2nd selection
-          //     newOrder[1] = target;
-          //     newOrder[2] = 1;
-          //   } else { //set 1st selection
-          //     newOrder[0] = target;
-          //     newOrder[2] = 0;
-          //   }
-          //   setSyntacticOrder(newOrder);
-          // } else if (toggle==="foreshadowing") { //todo: adjust gradient
-          //   if (!target.target) { //if target is an endpoint, indeterminate end
-          //     const newInstants = [...data];
-          //     const instant = newInstants.find(n => n.id === target.id);
-          //     instant.foreshadowing = true;
-          //     setData(newInstants);
-          //   } else { //otherwise, change mouse to no symbol
-          //     console.log("forbidden");
-          //   }
-          // } else if (toggle==="certainty" || toggle==="importance"){
-          //   setInflectTarget(target);
-          // } else {
-          //   setInfo({position: [e.x, e.y], target: target}); //displays instant properties when clicked
-          // }
+
           e.stopPropagation(); //stops deselect when bg is clicked
         });
 
-      /*//---draw inflections---//
-
-      //--draw connetion inflection--//
-      //circle around instant
-      svg
-        .selectAll(".connections")
-        .data(activeData.filter(d => d.connections))
-        .join("circle")
-        .raise()
-        .attr("class", "connections pointer")
-        .attr("r", n => n.radius? n.radius*1.5 : radius*2) //TODO: custom radius accessibility
-        .attr("fill", "none")
-        .attr("stroke", "black")
-        .attr("stroke-dasharray", "3")
-        // .attr("opacity", d => d.opacity ? d.opacity : 1)
-        .attr("cx", d => xScales[d.scale].scale(d.x)) //scale x coordinate based on xScale defined in instant's scale property
-        .attr("cy", d => yScale(d.y));
-
-      //link connecting circles
-      const ctLinker = linkHorizontal()
-        .source(instant => data.find(x => x.id === instant.id))
-        .target(instant => typeof(instant.connections[0])==="object" ? instant.connections[0] : data.find(x => x.id === instant.connections[0]))
-        // .target(() => {
-        //   //layerX, layerY
-        //   const y = yScaleInverse(499);
-        //   const x = xScales.find(n => n.text === "biggie").scaleInverse(778)
-        //   return {x: x, y: y}
-        // })
-        // .target(instant => data.find(x => x.id === instant.connections[0]))
-        .x(d => d.scale ? xScales[d.scale].scale(d.x) : d.x)
-        .y(d => d.scale ? yScale(d.y) : d.y);
-      svg
-        .selectAll(".connectionLinks")
-        .data(activeData.filter(n => n.connections && !n.connections[1])) //link starts from 1st one
-        .join("path")
-        .raise()
-        .attr("class", "connectionLinks pointer")
-        .attr("d", ctLinker)
-        .attr("fill", "none")
-        .attr("stroke", "black")
-        // .attr("stroke", n => n.color? n.color : "black")
-        // .attr("stroke-opacity", n => n.opacity ? n.opacity : 1)
-        .attr("stroke-dasharray", "3")
-*/
-      //initialize custom symbols
-      // const cancelledSymbol = {
-      //   draw: (context, size) => {
-      //     let s = Math.sqrt(size)/2;
-      //         context.moveTo(s,0);
-      //         context.lineTo(s*2,s);
-      //         context.lineTo(s,s*2);
-      //         context.lineTo(0,s);
-      //         context.lineTo(-s,s*2);
-      //         context.lineTo(-s*2,s);
-      //         context.lineTo(-s,0);
-      //         context.lineTo(-s*2,-s);
-      //         context.lineTo(-s,-s*2);
-      //         context.lineTo(0,-s);
-      //         context.lineTo(s,-s*2);
-      //         context.lineTo(s*2,-s);
-      //         context.closePath();
-      //   }
-        
-      /*
-      //foreshadowing symbol
-      const fsSymbol = {
+      const cancelledSymbol = {
         draw: (context, size) => {
-          let s = size;
-              context.moveTo(0,0);
-              context.lineTo(s*2,s/2);
-              context.lineTo(s*2,-s/2);
+          let s = Math.sqrt(size)/2;
+              context.moveTo(s,0);
+              context.lineTo(s*2,s);
+              context.lineTo(s,s*2);
+              context.lineTo(0,s);
+              context.lineTo(-s,s*2);
+              context.lineTo(-s*2,s);
+              context.lineTo(-s,0);
+              context.lineTo(-s*2,-s);
+              context.lineTo(-s,-s*2);
+              context.lineTo(0,-s);
+              context.lineTo(s,-s*2);
+              context.lineTo(s*2,-s);
               context.closePath();
         }
       };
-      //foreshadowing gradient
-      var fsg = svg.append("defs").append("linearGradient")
-      .attr("id", "fsgradient")//id of the gradient
-      .attr("x1", "0%")
-      .attr("x2", "100%") //since its a horizontal linear gradient
-      .attr("y1", "0%")
-      .attr("y2", "0%");
 
-      fsg.append("stop")
-      .attr("offset", "0%")
-      .style("stop-color", "black")//start in black. TODO: different color foreshadowing
-      .style("stop-opacity", 1);
-
-      fsg.append("stop")
-      .attr("offset", "100%")
-      .style("stop-color", "black")//end in transparent
-      .style("stop-opacity", 0);
-*/
-      //---draw symbols---//
-      //TODO: doesn't display if cancelled is true from the start
-      // .attr("cx", ([,v]) => xScales[v.scale[0]].scale(v.x)) //scale x coordinate based on xScale defined in instant's scale property
-      // .attr("cy", ([,v]) => yScale(v.y))
       svg
         .selectAll(".cancelled")
         .data(activeData.filter(([,v]) => v.cancelled))
@@ -723,40 +543,6 @@ function Graphic({
           }
           e.stopPropagation();
         });
-/*
-      //---draw foreshadowing---//
-      svg
-        .selectAll(".foreshadowing")
-        .data(activeData.filter(d => d.foreshadowing))
-        .join("path")
-        .raise()
-        .attr("class", "foreshadowing pointer")
-        .attr("d", symbol(fsSymbol, radius*radius*5))
-        .style("fill", "url(#fsgradient)")
-        .attr("transform", d => `translate(${xScales[d.scale].scale(d.x)}, ${yScale(d.y)})`)
-        .on("click", (e, target) => {
-          if (toggle==="foreshadowing") {
-            const newInstants = [...data];
-            const instant = newInstants.find(n => n.id === target.id);
-            delete instant.foreshadowing;
-            setData(newInstants);
-          } else {
-            setInfo({position: [e.x, e.y], target: target}); //displays instant properties when clicked
-          }
-          setToggle(null);
-          e.stopPropagation();
-        });
-*/
-      //---draw labels---//
-      // svg
-      //   .selectAll(".zonesLabel")
-      //   .data(zones)
-      //   .join("text")
-      //   .attr("class", "zonesLabel")
-      //   .text(v => v.text)
-      //   .attr("x", v => xScales[v.scale].scale(v.start))
-      //   .attr("y", v => yScale(v.yStart?v.yStart:yMin+5))
-      //   .attr("text-anchor", "middle");
 
       svg
         .selectAll(".label")
@@ -811,18 +597,9 @@ function Graphic({
     //regular clicking
     svg.on("click", (e) => {
       if (toggle==="addInstant") {
-        /*
-        if range of zoom > 10, Math.round(x)
-        if range of zoom <= 10 (floor: 10^0, ceiling: 10^1), use tenths (/10 -> /10^1)
-        if range of zoom <= 1 (floor: 10^-1, ceiling: 10^0), use hudredths (/100 -> (10^2))
-        if range of zoom <= .1 (floor: 10^-2, ceiling: 10^-1), use thousandths (/1000 -> (10^-3), etc.
-        const decimal = scales[activeScale]
-        xScales[key].scale
-        const decimal = scales[activeScale]
-        */
+
         //TODO: zoom range matches up with current zoom
         const zoomRange = xScales[activeScale[0]].scale.domain()[1] - xScales[activeScale[0]].scale.domain()[0]; //max-min
-        // const precision = Math.log10(zoomRange)<1 ? -(Math.floor(Math.log10(zoomRange)-1)) : 0;
         const x = xScales[activeScale[0]].scale.invert(e.layerX);
         const y = yScale.invert(e.layerY);
         // console.log(Math.round(x*Math.pow(10, precision))/ Math.pow(10, precision));

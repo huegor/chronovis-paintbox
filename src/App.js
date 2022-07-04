@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import './stylesheets/index.scss';
 
 /// Component Imports ///
-import Graphic from "./components/Graphic";
-import Image from "./components/Image";
+import Graphic from "./components/graphic/Graphic";
+import Image from "./components/InterfaceElements/Image";
 import NewInstantForm from "./components/NewInstantForm";
 import NewIntervalForm from "./components/NewIntervalForm";
 import NewZoneForm from "./components/NewZoneForm";
 import NewScaleForm from "./components/NewScaleForm";
 import EditScaleForm from "./components/EditScaleForm";
-import InfoBox from "./components/InfoBox";
+import InfoBox from "./components/InterfaceElements/InfoBox";
 import ExportDataForm from "./components/ExportDataForm";
 import ImportDataForm from "./components/ImportDataForm";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/InterfaceElements/NavBar";
 import Layers from "./components/Layers";
 import Scrubber from "./components/Scrubber";
-import Legend from "./components/Legend";
+import Legend from "./components/InterfaceElements/Legend";
 import Certainty from "./components/Certainty";
 import Importance from "./components/Importance";
 import Connection from "./components/Connection";
-import WelcomeMessage from "./components/WelcomeMessage";
+import WelcomeMessage from "./components/InterfaceElements/WelcomeMessage";
 import generateIntervals from "./components/generateIntervals";
 import EmptyProj from "./components/EmptyProj";
 import DataLibrary from "./components/DataLibrary";
@@ -50,9 +50,6 @@ function translateData({data, nullData}) {
       "scale": [(datum.calendarDate<0)?"early":scaleName, "Order in Text"],
       // "target": [datum.targets[datum.targets.length-1]], //???
       "text": datum.innerText,
-      // ...(e.target.color && {"color": e.target.color.value}), //if color is specified, create color entry in data
-      // ...(e.target.radius && {"radius": e.target.radius.value}),
-      // ...(e.target.opacity && {"opacity": e.target.opacity.value})
     };
     xValues.push(datum.calendarDate);
     yValues.push(datum.cy)
@@ -62,32 +59,6 @@ function translateData({data, nullData}) {
   xValues.sort((a, b) => a-b); //smallest to largest
   yValues.sort((a, b) => a-b); //smallest to largest
 
-
-  // //TODO: automated scale generation
-  // xValues.forEach((val, i) => {
-  //   if (xValues[i]+Math.abs(xValues[i])<xValues[i+1]) {
-  //     segments.push({
-  //       "min": segmentMin,
-  //       "max":xValues[i]
-  //     })
-  //     segmentMin = xValues[i+1];
-  //   } else if ((segments.length) && (i===xValues.length-1)){ //if there are segments and this is the last value
-  //     segments.push({
-  //       "min": segmentMin,
-  //       "max": null
-  //     })
-  //   };
-  // });
-  // for (let i; i=0; i++) {
-  //   console.log(xValues[i]+Math.abs(xValues[i])<xValues[i+1]);
-  //   if (xValues[i]+Math.abs(xValues[i])<xValues[i+1]) { //if a value is less than 1/2 of the next value, create a segment
-  //     // segments.push({
-  //     //   "min": segmentMin,
-  //     //   "max":xValues[i]
-  //     // })
-  //     // segmentMin = xValues[i+1];
-  //   }
-  // }
   newData.scales.x["early"] = {
     "min": xValues[0]-10,
     "max": xValues[0]+1000,
@@ -117,12 +88,6 @@ function translateData({data, nullData}) {
   return newData;
 }
 
-
-// function scalesList(scales) {
-//   Object.keys(scales).map((key, i) => {
-//     return <option value={key} key={i}>{key}</option>
-//   });
-// }
 
 function App() {
 

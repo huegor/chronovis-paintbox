@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ReactComponent as IconEdit } from '../assets/icons/edit.svg';
 
 function EditForm(props) {
 

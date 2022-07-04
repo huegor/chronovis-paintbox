@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { select, scaleLinear, scaleOrdinal, axisBottom, axisLeft, linkHorizontal, format, drag, zoom, min, max, symbol, symbols } from "d3";
-import useResizeObserver from "./useResizeObserver";
+import useResizeObserver from "../useResizeObserver";
 
 function DrawCancel(props) {
 

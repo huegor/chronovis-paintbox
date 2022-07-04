@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { ReactComponent as IconFile } from '../assets/icons/file.svg';
-import { ReactComponent as IconInstant } from '../assets/icons/instant.svg';
-import { ReactComponent as IconInterval } from '../assets/icons/interval.svg';
-import { ReactComponent as IconZone } from '../assets/icons/zone.svg';
-import { ReactComponent as IconMenu } from '../assets/icons/menu.svg';
-import { ReactComponent as IconPan } from '../assets/icons/pan.svg';
-import { ReactComponent as IconScales } from '../assets/icons/scales.svg';
-import { ReactComponent as IconViews } from '../assets/icons/views.svg';
-import { ReactComponent as IconConnection } from '../assets/icons/connection1.svg';
-import { ReactComponent as IconCausation } from '../assets/icons/causation.svg';
-import { ReactComponent as IconEdit } from '../assets/icons/edit.svg';
+import { ReactComponent as IconFile } from '../../assets/icons/file.svg';
+import { ReactComponent as IconInstant } from '../../assets/icons/instant.svg';
+import { ReactComponent as IconInterval } from '../../assets/icons/interval.svg';
+import { ReactComponent as IconZone } from '../../assets/icons/zone.svg';
+import { ReactComponent as IconMenu } from '../../assets/icons/menu.svg';
+import { ReactComponent as IconPan } from '../../assets/icons/pan.svg';
+import { ReactComponent as IconScales } from '../../assets/icons/scales.svg';
+import { ReactComponent as IconViews } from '../../assets/icons/views.svg';
+import { ReactComponent as IconConnection } from '../../assets/icons/connection1.svg';
+import { ReactComponent as IconCausation } from '../../assets/icons/causation.svg';
+import { ReactComponent as IconEdit } from '../../assets/icons/edit.svg';
 import EditForm from './EditForm';
 //AKA the navbar, holds all the tools, settings, and whatnot on the top of the page
 
