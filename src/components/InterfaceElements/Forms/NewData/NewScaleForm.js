@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import InputFormText from './InputFormText';
-import InputFormNum from './InputFormNum';
+import InputFormText from '../InputFormText';
+import InputFormNum from '../InputFormNum';
 
 /*
    UI and function for adding new scales.

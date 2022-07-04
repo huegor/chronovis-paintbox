@@ -1,6 +1,6 @@
 import deleteInstant from "../deleteInstant";
 import deleteInterval from "../deleteInterval";
-import EditForm from "./EditForm";
+import EditForm from "./Forms/EditForm";
 import React, { useState } from 'react';
 
 /*

@@ -1,7 +1,7 @@
 import React from 'react';
-import InputFormScale from './InputFormScale';
-import InputFormText from './InputFormText';
-import InputFormNum from './InputFormNum';
+import InputFormScale from '../InputFormScale';
+import InputFormText from '../InputFormText';
+import InputFormNum from '../InputFormNum';
 
 /*
    UI and function for adding new points.

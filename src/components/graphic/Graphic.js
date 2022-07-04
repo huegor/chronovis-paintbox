@@ -524,7 +524,7 @@ function Graphic({
         }
       };
 
-      svg
+      const drawCancel = svg
         .selectAll(".cancelled")
         .data(activeData.filter(([,v]) => v.cancelled))
         .join("path")

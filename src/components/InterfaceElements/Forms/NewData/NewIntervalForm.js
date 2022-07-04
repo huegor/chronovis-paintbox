@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import InputFormScale from './InputFormScale';
-import InputFormText from './InputFormText';
-import InputFormNum from './InputFormNum';
+import InputFormScale from '../InputFormScale';
+import InputFormText from '../InputFormText';
+import InputFormNum from '../InputFormNum';
 
 function NewIntervalForm({data, updateSrc, setToggle, scales, activeScale, history, setHistory}) {
 

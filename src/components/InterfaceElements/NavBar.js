@@ -10,7 +10,7 @@ import { ReactComponent as IconViews } from '../../assets/icons/views.svg';
 import { ReactComponent as IconConnection } from '../../assets/icons/connection1.svg';
 import { ReactComponent as IconCausation } from '../../assets/icons/causation.svg';
 import { ReactComponent as IconEdit } from '../../assets/icons/edit.svg';
-import EditForm from './EditForm';
+import EditForm from './Forms/EditForm';
 //AKA the navbar, holds all the tools, settings, and whatnot on the top of the page
 
 function EditButton({editMode}) {

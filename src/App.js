@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import './stylesheets/index.scss';
 
 /// Component Imports ///
-import Graphic from "./components/graphic/Graphic";
+import Graphic from "./components/Graphic/Graphic";
 import Image from "./components/InterfaceElements/Image";
-import NewInstantForm from "./components/NewInstantForm";
-import NewIntervalForm from "./components/NewIntervalForm";
-import NewZoneForm from "./components/NewZoneForm";
-import NewScaleForm from "./components/NewScaleForm";
-import EditScaleForm from "./components/EditScaleForm";
+import NewInstantForm from "./components/InterfaceElements/Forms/NewData/NewInstantForm";
+import NewIntervalForm from "./components/InterfaceElements/Forms/NewData/NewIntervalForm";
+import NewZoneForm from "./components/InterfaceElements/Forms/NewData/NewZoneForm";
+import NewScaleForm from "./components/InterfaceElements/Forms/NewData/NewScaleForm";
+import EditScaleForm from "./components/InterfaceElements/Forms/EditScaleForm";
 import InfoBox from "./components/InterfaceElements/InfoBox";
-import ExportDataForm from "./components/ExportDataForm";
-import ImportDataForm from "./components/ImportDataForm";
+import ExportDataForm from "./components/InterfaceElements/Forms/ExportData/ExportDataForm";
+import ImportDataForm from "./components/InterfaceElements/Forms/ImportData/ImportDataForm";
 import NavBar from "./components/InterfaceElements/NavBar";
-import Layers from "./components/Layers";
-import Scrubber from "./components/Scrubber";
+import Layers from "./components/InterfaceElements/Layers";
+import Scrubber from "./components/InterfaceElements/Scrubber";
 import Legend from "./components/InterfaceElements/Legend";
 import Certainty from "./components/Certainty";
 import Importance from "./components/Importance";
@@ -22,7 +22,7 @@ import Connection from "./components/Connection";
 import WelcomeMessage from "./components/InterfaceElements/WelcomeMessage";
 import generateIntervals from "./components/generateIntervals";
 import EmptyProj from "./components/EmptyProj";
-import DataLibrary from "./components/DataLibrary";
+import DataLibrary from "./components/Data/DataLibrary";
 
 /// Data Imports ///
 import Data from "./data.json";
