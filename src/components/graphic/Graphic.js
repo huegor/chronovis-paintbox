@@ -40,27 +40,40 @@ function Graphic({
   //hash map of y scales
   const yScales = {};
 
+  //First useEffect outside the scope of the second one. 
+  //trying to isolate the scales and tics so that it does not rerender over again. 
+  //only rerenders under specific circumstances. 
+  //may have to write a custom hook that separates out the scale rendering from temporal objects and inflections to optimize performance
+  //right now on ever draw- rerenders all the scales as well
+  //render the scale only when it is being moved
+  //main problem: scales are using variables that are being defined that are in the second useEffect they are dependant on them in a way that makes it very 
+  //hard to cut out 
+
+  //Specific variables that are used by both the scales and main draw: wrapped in a function that could not be accessed if it were moved to a different function. 
+
+  //zoomstate() is the main one - requires D3 to define dimensions of the window 
+
   //init scales. turn into useRef eventually
-  useEffect(() => {
-    if (!dimensions) return;
-    const yTicks = [];
+  // useEffect(() => {
+  //   if (!dimensions) return;
+  //   const yTicks = [];
 
-    for (let v of activeData) {
-      yTicks.push(activeData.y);
-    }
+  //   for (let v of activeData) {
+  //     yTicks.push(activeData.y);
+  //   }
 
-    Object.entries(scales.y).forEach(([k, v]) => {
-      yScales[k]= {
-        scale: scaleLinear()
-        .domain([0, dimensions.height])
-        .range([v.min, v.max]),
-        drag: scaleLinear()
-        .domain([-dimensions.height, dimensions.height])
-        .range([-(v.max-v.min), (v.max-v.min)]),
-        ticks: [...new Set(yTicks)]
-      }
-    });
-  }, [dimensions, scales, currentZoomState, data]);
+  //   Object.entries(scales.y).forEach(([k, v]) => {
+  //     yScales[k]= {
+  //       scale: scaleLinear()
+  //       .domain([0, dimensions.height])
+  //       .range([v.min, v.max]),
+  //       drag: scaleLinear()
+  //       .domain([-dimensions.height, dimensions.height])
+  //       .range([-(v.max-v.min), (v.max-v.min)]),
+  //       ticks: [...new Set(yTicks)]
+  //     }
+  //   });
+  // }, [dimensions, scales, currentZoomState, data]);
 
   //initialize intervals between instants
   const intervals = generateIntervals(data); //TODO: write updateIntervals function
